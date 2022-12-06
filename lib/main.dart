@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habit_tracker/screens/home_page.dart';
 
 void main() {
   runApp(const HabitTrackerApp());
@@ -13,25 +14,9 @@ class HabitTrackerApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Habit Tracker',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: const ColorScheme.dark(),
       ),
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Habit Tracker'),
-      ),
-      body: const Center(
-        child: Text('Hello There!', style: TextStyle(fontSize: 32)),
-      ),
+      home: HomePage(),
     );
   }
 }
