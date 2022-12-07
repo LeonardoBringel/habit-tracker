@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habit_tracker/screens/edit_goal_page.dart';
 import 'package:habit_tracker/screens/home_page.dart';
 
 void main() {
@@ -16,7 +17,11 @@ class HabitTrackerApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: const ColorScheme.dark(),
       ),
-      home: HomePage(),
+      home: const HomePage(),
+      routes: {
+        'Home': (context) => const HomePage(),
+        'EditGoal': (context) => const EditGoalPage(),
+      },
     );
   }
 }

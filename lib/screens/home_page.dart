@@ -1,46 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:habit_tracker/models/goal.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
-  final List<Goal> goals = [
-    const Goal(
-      name: 'Goal 1',
-      description: '',
-      frequency: 'Today',
-      icon: Icons.auto_awesome,
-      completedDates: [],
-    ),
-    const Goal(
-      name: 'Goal 2',
-      description: '',
-      frequency: 'Daily',
-      icon: Icons.auto_awesome,
-      completedDates: [],
-    ),
-    const Goal(
-      name: 'Goal 3',
-      description: '',
-      frequency: 'Daily',
-      icon: Icons.auto_awesome,
-      completedDates: [],
-    ),
-    const Goal(
-      name: 'Goal 4',
-      description: '',
-      frequency: 'Weekly',
-      icon: Icons.auto_awesome,
-      completedDates: [],
-    ),
-    const Goal(
-      name: 'Goal 5',
-      description: '',
-      frequency: 'Daily',
-      icon: Icons.auto_awesome,
-      completedDates: [],
-    ),
-  ];
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final List<Goal> goals = [];
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +44,7 @@ class HomePage extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                       subtitle: Text(
-                        goals[index].frequency,
+                        goals[index].days.toString(),
                         style: const TextStyle(fontSize: 18),
                         textAlign: TextAlign.center,
                       ),
@@ -88,6 +57,17 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add, size: 32),
+        onPressed: () async {
+          Goal? goal = await Navigator.pushNamed(context, 'EditGoal') as Goal?;
+          if (goal != null) {
+            setState(() {
+              goals.add(goal);
+            });
+          }
+        },
       ),
     );
   }
