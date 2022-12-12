@@ -13,7 +13,7 @@ class _HomePageState extends State<HomePage> {
 
   var date = DateTime.now();
   var weekdays = {
-    1: 'SUN',
+    1: 'MON',
     2: 'TUE',
     3: 'WED',
     4: 'THU',
