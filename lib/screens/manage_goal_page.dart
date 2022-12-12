@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:habit_tracker/models/goal.dart';
 
 import '../components/day_button_widget.dart';
+import '../models/goal.dart';
 
 class EditGoalPage extends StatefulWidget {
   const EditGoalPage({super.key});

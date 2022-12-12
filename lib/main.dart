@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:habit_tracker/screens/manage_goal_page.dart';
-import 'package:habit_tracker/screens/home_page.dart';
+
+import 'screens/home_page.dart';
+import 'screens/manage_goal_page.dart';
 
 void main() {
   runApp(const HabitTrackerApp());

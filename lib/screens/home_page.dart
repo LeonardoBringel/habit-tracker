@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:habit_tracker/models/goal.dart';
 
 import '../components/goal_tile_widget.dart';
+import '../models/goal.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
