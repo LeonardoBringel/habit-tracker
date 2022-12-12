@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:habit_tracker/screens/edit_goal_page.dart';
+import 'package:habit_tracker/screens/manage_goal_page.dart';
 import 'package:habit_tracker/screens/home_page.dart';
 
 void main() {
