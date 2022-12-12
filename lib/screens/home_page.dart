@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:habit_tracker/models/goal.dart';
 
+import '../components/goal_tile_widget.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -10,17 +12,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final List<Goal> goals = [];
-
-  var date = DateTime.now();
-  var weekdays = {
-    1: 'MON',
-    2: 'TUE',
-    3: 'WED',
-    4: 'THU',
-    5: 'FRI',
-    6: 'SAT',
-    7: 'SUN',
-  };
 
   @override
   Widget build(BuildContext context) {
@@ -46,26 +37,8 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.all(8),
                 itemCount: goals.length,
                 itemBuilder: (BuildContext context, int index) {
-                  if (goals[index].days.contains(weekdays[date.weekday]!)) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: ListTile(
-                        title: Text(
-                          goals[index].name,
-                          style: const TextStyle(fontSize: 24),
-                          textAlign: TextAlign.center,
-                        ),
-                        subtitle: Text(
-                          goals[index].days.length == 7
-                              ? 'Daily'
-                              : weekdays[date.weekday]!,
-                          style: const TextStyle(fontSize: 18),
-                          textAlign: TextAlign.center,
-                        ),
-                        leading: const Icon(Icons.auto_awesome),
-                        trailing: const Icon(Icons.check_box_outlined),
-                      ),
-                    );
+                  if (goals[index].days.contains(DateTime.now().weekday)) {
+                    return GoalTileWidget(goal: goals[index]);
                   } else {
                     return Container();
                   }
