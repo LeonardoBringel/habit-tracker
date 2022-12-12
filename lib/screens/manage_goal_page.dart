@@ -42,7 +42,6 @@ class _EditGoalPageState extends State<EditGoalPage> {
       }
     }
 
-    debugPrint(selectedDays.toString());
     return selectedDays;
   }
 
