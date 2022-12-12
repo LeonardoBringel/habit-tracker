@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:habit_tracker/models/goal.dart';
 
+import '../components/day_button_widget.dart';
+
 class EditGoalPage extends StatefulWidget {
   const EditGoalPage({super.key});
 
@@ -14,17 +16,17 @@ class _EditGoalPageState extends State<EditGoalPage> {
   final nameFieldController = TextEditingController();
   final descriptionFieldController = TextEditingController();
 
-  final List<List<DayButton>> listsOfDays = [
+  final List<List<DayButtonWidget>> listsOfDays = [
     [
-      DayButton('MON'),
-      DayButton('TUE'),
-      DayButton('WED'),
-      DayButton('THU'),
+      DayButtonWidget('MON'),
+      DayButtonWidget('TUE'),
+      DayButtonWidget('WED'),
+      DayButtonWidget('THU'),
     ],
     [
-      DayButton('FRI'),
-      DayButton('SAT'),
-      DayButton('SUN'),
+      DayButtonWidget('FRI'),
+      DayButtonWidget('SAT'),
+      DayButtonWidget('SUN'),
     ],
   ];
 
@@ -130,34 +132,6 @@ class _EditGoalPageState extends State<EditGoalPage> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class DayButton extends StatefulWidget {
-  DayButton(this.day, {super.key});
-
-  final String day;
-  bool isSelected = false;
-
-  @override
-  State<DayButton> createState() => _DayButtonState();
-}
-
-class _DayButtonState extends State<DayButton> {
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        setState(() {
-          widget.isSelected = !widget.isSelected;
-        });
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor:
-            widget.isSelected ? Colors.yellow.shade500 : Colors.grey.shade600,
-      ),
-      child: Text(widget.day),
     );
   }
 }
