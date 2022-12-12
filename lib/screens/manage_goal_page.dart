@@ -30,16 +30,19 @@ class _EditGoalPageState extends State<EditGoalPage> {
     ],
   ];
 
-  List<String> _getSelectedDays() {
-    List<String> selectedDays = [];
+  List<int> _getSelectedDays() {
+    List<int> selectedDays = [];
 
-    for (var listOfDays in listsOfDays) {
-      for (var dayButton in listOfDays) {
-        if (dayButton.isSelected) {
-          selectedDays.add(dayButton.day);
-        }
+    final List<DayButtonWidget> combinedListOfDayButtons =
+        listsOfDays[0] + listsOfDays[1];
+
+    for (var i = 0; i < 7; i++) {
+      if (combinedListOfDayButtons[i].isSelected) {
+        selectedDays.add(i + 1);
       }
     }
+
+    debugPrint(selectedDays.toString());
     return selectedDays;
   }
 

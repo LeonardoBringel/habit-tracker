@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Goal {
   final String name;
   final String description;
-  final List<String> days;
+  final List<int> days;
   final IconData icon;
   final List<String> completedDates;
 
