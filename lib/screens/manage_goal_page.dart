@@ -16,7 +16,7 @@ class _EditGoalPageState extends State<EditGoalPage> {
   final nameFieldController = TextEditingController();
   final descriptionFieldController = TextEditingController();
 
-  final List<List<DayButtonWidget>> listsOfDays = [
+  final List<List<DayButtonWidget>> listsOfDayButtons = [
     [
       DayButtonWidget('MON'),
       DayButtonWidget('TUE'),
@@ -34,7 +34,7 @@ class _EditGoalPageState extends State<EditGoalPage> {
     List<int> selectedDays = [];
 
     final List<DayButtonWidget> combinedListOfDayButtons =
-        listsOfDays[0] + listsOfDays[1];
+        listsOfDayButtons[0] + listsOfDayButtons[1];
 
     for (var i = 0; i < 7; i++) {
       if (combinedListOfDayButtons[i].isSelected) {
@@ -124,11 +124,11 @@ class _EditGoalPageState extends State<EditGoalPage> {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: listsOfDays[0],
+                  children: listsOfDayButtons[0],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: listsOfDays[1],
+                  children: listsOfDayButtons[1],
                 )
               ],
             )
