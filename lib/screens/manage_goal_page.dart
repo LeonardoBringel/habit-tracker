@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../components/custom_text_form_field_widget.dart';
 import '../components/day_button_widget.dart';
 import '../models/goal.dart';
 
@@ -86,38 +87,16 @@ class _EditGoalPageState extends State<EditGoalPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            TextFormField(
+            CustomTextFormFieldWidget(
               controller: nameFieldController,
-              style: const TextStyle(fontSize: 18),
               maxLength: 24,
-              decoration: InputDecoration(
-                hintText: 'My Goal',
-                border: InputBorder.none,
-                enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.yellow),
-                    borderRadius: BorderRadius.circular(30)),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.yellow),
-                    borderRadius: BorderRadius.circular(30)),
-                contentPadding: const EdgeInsets.all(25),
-              ),
+              hintText: 'My Goal',
             ),
-            TextFormField(
+            CustomTextFormFieldWidget(
               controller: descriptionFieldController,
-              style: const TextStyle(fontSize: 18),
               maxLength: 165,
               maxLines: 5,
-              decoration: InputDecoration(
-                hintText: 'A short description of my goal',
-                border: InputBorder.none,
-                enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.yellow),
-                    borderRadius: BorderRadius.circular(30)),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.yellow),
-                    borderRadius: BorderRadius.circular(30)),
-                contentPadding: const EdgeInsets.all(25),
-              ),
+              hintText: 'A short description of my goal',
             ),
             Column(
               children: [
