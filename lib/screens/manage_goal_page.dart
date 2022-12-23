@@ -17,6 +17,18 @@ class _EditGoalPageState extends State<EditGoalPage> {
   final nameFieldController = TextEditingController();
   final descriptionFieldController = TextEditingController();
 
+  List<IconData> icons = const [
+    Icons.auto_awesome,
+    Icons.cake,
+    Icons.school,
+    Icons.favorite_rounded,
+    Icons.credit_card,
+    Icons.rocket_launch_rounded,
+    Icons.airplanemode_on_rounded,
+  ];
+
+  IconData selectedIcon = Icons.auto_awesome;
+
   final List<List<DayButtonWidget>> listsOfDayButtons = [
     [
       DayButtonWidget('MON'),
@@ -71,7 +83,7 @@ class _EditGoalPageState extends State<EditGoalPage> {
                 name: nameFieldController.text,
                 description: nameFieldController.text,
                 days: _getSelectedDays(),
-                icon: Icons.auto_awesome,
+                icon: selectedIcon,
                 completedDates: [],
               ),
             ),
@@ -87,6 +99,27 @@ class _EditGoalPageState extends State<EditGoalPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            DropdownButton(
+              value: selectedIcon,
+              underline: Container(
+                height: 2,
+                color: Colors.yellow,
+              ),
+              onChanged: (value) {
+                setState(() {
+                  selectedIcon = value!;
+                });
+              },
+              items: icons.map<DropdownMenuItem>((value) {
+                return DropdownMenuItem(
+                  value: value,
+                  child: Icon(
+                    value,
+                    color: Colors.yellow,
+                  ),
+                );
+              }).toList(),
+            ),
             CustomTextFormFieldWidget(
               controller: nameFieldController,
               maxLength: 24,

@@ -32,7 +32,7 @@ class GoalTileWidget extends StatelessWidget {
           style: const TextStyle(fontSize: 18),
           textAlign: TextAlign.center,
         ),
-        leading: const Icon(Icons.auto_awesome),
+        leading: Icon(goal.icon),
         trailing: const Icon(Icons.check_box_outlined),
       ),
     );
