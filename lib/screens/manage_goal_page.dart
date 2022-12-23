@@ -77,16 +77,40 @@ class _EditGoalPageState extends State<EditGoalPage> {
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(
-              context,
-              Goal(
-                name: nameFieldController.text,
-                description: nameFieldController.text,
-                days: _getSelectedDays(),
-                icon: selectedIcon,
-                completedDates: [],
-              ),
-            ),
+            onPressed: () {
+              if (nameFieldController.text.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Every goal must have a name!'),
+                    duration: Duration(seconds: 3),
+                  ),
+                );
+              } else if (_getSelectedDays().isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('At least one day must be selected.'),
+                    duration: Duration(seconds: 3),
+                  ),
+                );
+              } else {
+                Navigator.pop(
+                  context,
+                  Goal(
+                    name: nameFieldController.text,
+                    description: nameFieldController.text,
+                    days: _getSelectedDays(),
+                    icon: selectedIcon,
+                    completedDates: [],
+                  ),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Goal saved!'),
+                    duration: Duration(seconds: 3),
+                  ),
+                );
+              }
+            },
             child: const Text(
               'Done',
               style: TextStyle(fontSize: 18),
