@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../components/custom_text_form_field_widget.dart';
 import '../components/day_button_widget.dart';
+import '../components/snackbar_message.dart';
 import '../models/goal.dart';
 
 class EditGoalPage extends StatefulWidget {
@@ -79,19 +80,9 @@ class _EditGoalPageState extends State<EditGoalPage> {
           TextButton(
             onPressed: () {
               if (nameFieldController.text.isEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Every goal must have a name!'),
-                    duration: Duration(seconds: 3),
-                  ),
-                );
+                snackbarMessage(context, 'Every goal must have a name!');
               } else if (_getSelectedDays().isEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('At least one day must be selected.'),
-                    duration: Duration(seconds: 3),
-                  ),
-                );
+                snackbarMessage(context, 'At least one day must be selected.');
               } else {
                 Navigator.pop(
                   context,
@@ -103,12 +94,7 @@ class _EditGoalPageState extends State<EditGoalPage> {
                     completedDates: [],
                   ),
                 );
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Goal saved!'),
-                    duration: Duration(seconds: 3),
-                  ),
-                );
+                snackbarMessage(context, 'Goal saved!');
               }
             },
             child: const Text(
