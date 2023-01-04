@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Goal {
+  final int id;
   final String name;
   final String description;
   final List<int> days;
@@ -8,6 +9,7 @@ class Goal {
   final List<String> completedDates;
 
   const Goal({
+    this.id = -1,
     required this.name,
     required this.description,
     required this.days,
