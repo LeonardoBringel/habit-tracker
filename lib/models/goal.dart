@@ -29,4 +29,26 @@ class Goal {
           json['is_on_sunday'] == 1,
         ],
         icon = IconData(json['icon']);
+
+  Map<String, dynamic> toJson() {
+    var json = <String, dynamic>{
+      'id': id,
+      'name': name,
+      'description': description,
+      'is_on_monday': days[0],
+      'is_on_tuesday': days[1],
+      'is_on_wednesday': days[2],
+      'is_on_thursday': days[3],
+      'is_on_friday': days[4],
+      'is_on_saturday': days[5],
+      'is_on_sunday': days[6],
+      'icon': icon.codePoint,
+    };
+
+    if (id == -1) {
+      json.remove('id');
+    }
+
+    return json;
+  }
 }
