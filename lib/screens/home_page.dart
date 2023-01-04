@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../components/goal_tile_widget.dart';
+import '../database/database_manager.dart';
 import '../models/goal.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,7 +12,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Goal> goals = [];
+  List<Goal> goals = [];
+
+  void _fetchGoals() async {
+    goals = await DatabaseManager.instance.fetchGoals();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchGoals();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +66,7 @@ class _HomePageState extends State<HomePage> {
           Goal? goal = await Navigator.pushNamed(context, 'EditGoal') as Goal?;
           if (goal != null) {
             setState(() {
+              DatabaseManager.instance.addGoal(goal);
               goals.add(goal);
             });
           }
