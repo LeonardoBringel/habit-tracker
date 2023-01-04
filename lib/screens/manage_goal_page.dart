@@ -44,16 +44,14 @@ class _EditGoalPageState extends State<EditGoalPage> {
     ],
   ];
 
-  List<int> _getSelectedDays() {
-    List<int> selectedDays = [];
+  List<bool> _getSelectedDays() {
+    List<bool> selectedDays = [];
 
     final List<DayButtonWidget> combinedListOfDayButtons =
         listsOfDayButtons[0] + listsOfDayButtons[1];
 
-    for (var i = 0; i < 7; i++) {
-      if (combinedListOfDayButtons[i].isSelected) {
-        selectedDays.add(i + 1);
-      }
+    for (var dayButton in combinedListOfDayButtons) {
+      selectedDays.add(dayButton.isSelected);
     }
 
     return selectedDays;
@@ -81,7 +79,7 @@ class _EditGoalPageState extends State<EditGoalPage> {
             onPressed: () {
               if (nameFieldController.text.isEmpty) {
                 snackbarMessage(context, 'Every goal must have a name!');
-              } else if (_getSelectedDays().isEmpty) {
+              } else if (!_getSelectedDays().contains(true)) {
                 snackbarMessage(context, 'At least one day must be selected.');
               } else {
                 Navigator.pop(

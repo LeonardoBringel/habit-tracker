@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.all(8),
                 itemCount: goals.length,
                 itemBuilder: (BuildContext context, int index) {
-                  if (goals[index].days.contains(DateTime.now().weekday)) {
+                  if (goals[index].days[DateTime.now().weekday - 1]) {
                     return GoalTileWidget(goal: goals[index]);
                   } else {
                     return Container();

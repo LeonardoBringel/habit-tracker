@@ -4,7 +4,7 @@ class Goal {
   final int id;
   final String name;
   final String description;
-  final List<int> days;
+  final List<bool> days;
   final IconData icon;
 
   const Goal({
