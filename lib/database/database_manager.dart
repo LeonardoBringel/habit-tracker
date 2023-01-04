@@ -39,7 +39,7 @@ class DatabaseManager {
         is_on_friday BOOLEAN,
         is_on_saturday BOOLEAN,
         is_on_sunday BOOLEAN,
-        icon INTEGER
+        icon_id INTEGER
       );
     ''');
   }

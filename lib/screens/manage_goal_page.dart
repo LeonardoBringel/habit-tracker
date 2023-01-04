@@ -88,7 +88,7 @@ class _EditGoalPageState extends State<EditGoalPage> {
                     name: nameFieldController.text,
                     description: nameFieldController.text,
                     days: _getSelectedDays(),
-                    icon: selectedIcon,
+                    iconId: selectedIcon.codePoint,
                   ),
                 );
                 snackbarMessage(context, 'Goal saved!');

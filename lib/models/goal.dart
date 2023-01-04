@@ -1,18 +1,16 @@
-import 'package:flutter/material.dart';
-
 class Goal {
   final int id;
   final String name;
   final String description;
   final List<bool> days;
-  final IconData icon;
+  final int iconId;
 
   const Goal({
     this.id = -1,
     required this.name,
     required this.description,
     required this.days,
-    required this.icon,
+    required this.iconId,
   });
 
   Goal.fromJson(Map<String, dynamic> json)
@@ -28,7 +26,7 @@ class Goal {
           json['is_on_saturday'] == 1,
           json['is_on_sunday'] == 1,
         ],
-        icon = IconData(json['icon']);
+        iconId = json['icon_id'];
 
   Map<String, dynamic> toJson() {
     var json = <String, dynamic>{
@@ -42,7 +40,7 @@ class Goal {
       'is_on_friday': days[4],
       'is_on_saturday': days[5],
       'is_on_sunday': days[6],
-      'icon': icon.codePoint,
+      'icon_id': iconId,
     };
 
     if (id == -1) {

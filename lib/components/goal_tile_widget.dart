@@ -34,7 +34,12 @@ class GoalTileWidget extends StatelessWidget {
           style: const TextStyle(fontSize: 18),
           textAlign: TextAlign.center,
         ),
-        leading: Icon(goal.icon),
+        leading: Icon(
+          IconData(
+            goal.iconId,
+            fontFamily: 'MaterialIcons',
+          ),
+        ),
         trailing: const Icon(Icons.check_box_outlined),
       ),
     );
