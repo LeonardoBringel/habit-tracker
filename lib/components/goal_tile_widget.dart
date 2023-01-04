@@ -28,11 +28,18 @@ class GoalTileWidget extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         subtitle: Text(
-          goal.days.length == 7 ? 'Daily' : weekdays[DateTime.now().weekday]!,
+          goal.days.contains(false)
+              ? weekdays[DateTime.now().weekday]!
+              : 'Daily',
           style: const TextStyle(fontSize: 18),
           textAlign: TextAlign.center,
         ),
-        leading: Icon(goal.icon),
+        leading: Icon(
+          IconData(
+            goal.iconId,
+            fontFamily: 'MaterialIcons',
+          ),
+        ),
         trailing: const Icon(Icons.check_box_outlined),
       ),
     );
