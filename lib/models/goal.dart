@@ -6,7 +6,6 @@ class Goal {
   final String description;
   final List<int> days;
   final IconData icon;
-  final List<String> completedDates;
 
   const Goal({
     this.id = -1,
@@ -14,6 +13,5 @@ class Goal {
     required this.description,
     required this.days,
     required this.icon,
-    required this.completedDates,
   });
 }
