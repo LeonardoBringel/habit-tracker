@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../components/custom_text_form_field_widget.dart';
 import '../components/day_button_widget.dart';
 import '../components/snackbar_message.dart';
+import '../database/database_manager.dart';
 import '../models/goal.dart';
 
 class EditGoalPage extends StatefulWidget {
@@ -61,7 +62,7 @@ class _EditGoalPageState extends State<EditGoalPage> {
         centerTitle: true,
         leadingWidth: 80,
         leading: TextButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.pop(context, false),
           child: const Text(
             'Cancel',
             style: TextStyle(fontSize: 18),
@@ -75,8 +76,7 @@ class _EditGoalPageState extends State<EditGoalPage> {
               } else if (!_getSelectedDays().contains(true)) {
                 snackbarMessage(context, 'At least one day must be selected.');
               } else {
-                Navigator.pop(
-                  context,
+                DatabaseManager.instance.addGoal(
                   Goal(
                     name: nameFieldController.text,
                     description: nameFieldController.text,
@@ -84,6 +84,7 @@ class _EditGoalPageState extends State<EditGoalPage> {
                     iconId: selectedIcon.codePoint,
                   ),
                 );
+                Navigator.pop(context, true);
                 snackbarMessage(context, 'Goal saved!');
               }
             },

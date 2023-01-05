@@ -63,12 +63,11 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add, size: 32),
         onPressed: () async {
-          Goal? goal = await Navigator.pushNamed(context, 'EditGoal') as Goal?;
-          if (goal != null) {
-            setState(() {
-              DatabaseManager.instance.addGoal(goal);
-              goals.add(goal);
-            });
+          bool isModified =
+              await Navigator.pushNamed(context, 'EditGoal') as bool;
+
+          if (isModified) {
+            _fetchGoals();
           }
         },
       ),
