@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'repositories/goals_repository.dart';
 import 'screens/home_page.dart';
 import 'screens/manage_goal_page.dart';
 
 void main() {
-  runApp(const HabitTrackerApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => GoalsRepository(),
+      child: const HabitTrackerApp(),
+    ),
+  );
 }
 
 class HabitTrackerApp extends StatelessWidget {

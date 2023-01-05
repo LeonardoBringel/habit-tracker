@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../components/custom_text_form_field_widget.dart';
 import '../components/day_button_widget.dart';
 import '../components/snackbar_message.dart';
-import '../database/database_manager.dart';
 import '../models/goal.dart';
+import '../repositories/goals_repository.dart';
 
 class EditGoalPage extends StatefulWidget {
   const EditGoalPage({super.key});
@@ -14,6 +15,8 @@ class EditGoalPage extends StatefulWidget {
 }
 
 class _EditGoalPageState extends State<EditGoalPage> {
+  late GoalsRepository goalsRepository;
+
   List<String> selectedDays = [];
 
   final nameFieldController = TextEditingController();
@@ -53,6 +56,8 @@ class _EditGoalPageState extends State<EditGoalPage> {
 
   @override
   Widget build(BuildContext context) {
+    goalsRepository = Provider.of<GoalsRepository>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -62,7 +67,7 @@ class _EditGoalPageState extends State<EditGoalPage> {
         centerTitle: true,
         leadingWidth: 80,
         leading: TextButton(
-          onPressed: () => Navigator.pop(context, false),
+          onPressed: () => Navigator.pop(context),
           child: const Text(
             'Cancel',
             style: TextStyle(fontSize: 18),
@@ -76,7 +81,7 @@ class _EditGoalPageState extends State<EditGoalPage> {
               } else if (!_getSelectedDays().contains(true)) {
                 snackbarMessage(context, 'At least one day must be selected.');
               } else {
-                DatabaseManager.instance.addGoal(
+                goalsRepository.saveGoal(
                   Goal(
                     name: nameFieldController.text,
                     description: nameFieldController.text,
@@ -84,7 +89,7 @@ class _EditGoalPageState extends State<EditGoalPage> {
                     iconId: selectedIcon.codePoint,
                   ),
                 );
-                Navigator.pop(context, true);
+                Navigator.pop(context);
                 snackbarMessage(context, 'Goal saved!');
               }
             },
