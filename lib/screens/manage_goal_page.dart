@@ -30,27 +30,20 @@ class _EditGoalPageState extends State<EditGoalPage> {
 
   IconData selectedIcon = Icons.auto_awesome;
 
-  final List<List<DayButtonWidget>> listsOfDayButtons = [
-    [
-      DayButtonWidget('MON'),
-      DayButtonWidget('TUE'),
-      DayButtonWidget('WED'),
-      DayButtonWidget('THU'),
-    ],
-    [
-      DayButtonWidget('FRI'),
-      DayButtonWidget('SAT'),
-      DayButtonWidget('SUN'),
-    ],
+  final List<DayButtonWidget> dayButtons = [
+    DayButtonWidget('MON'),
+    DayButtonWidget('TUE'),
+    DayButtonWidget('WED'),
+    DayButtonWidget('THU'),
+    DayButtonWidget('FRI'),
+    DayButtonWidget('SAT'),
+    DayButtonWidget('SUN'),
   ];
 
   List<bool> _getSelectedDays() {
     List<bool> selectedDays = [];
 
-    final List<DayButtonWidget> combinedListOfDayButtons =
-        listsOfDayButtons[0] + listsOfDayButtons[1];
-
-    for (var dayButton in combinedListOfDayButtons) {
+    for (var dayButton in dayButtons) {
       selectedDays.add(dayButton.isSelected);
     }
 
@@ -142,11 +135,11 @@ class _EditGoalPageState extends State<EditGoalPage> {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: listsOfDayButtons[0],
+                  children: dayButtons.sublist(0, 4),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: listsOfDayButtons[1],
+                  children: dayButtons.sublist(4),
                 )
               ],
             )
