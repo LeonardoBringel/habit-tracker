@@ -16,7 +16,22 @@ class _HomePageState extends State<HomePage> {
 
   void _fetchGoals() async {
     goals = await DatabaseManager.instance.fetchGoals();
+
+    _filterGoalsByWeekday(DateTime.now().weekday - 1);
+
     setState(() {});
+  }
+
+  void _filterGoalsByWeekday(int weekday) {
+    List<Goal> filteredGoals = [];
+
+    for (var goal in goals) {
+      if (goal.days[weekday]) {
+        filteredGoals.add(goal);
+      }
+    }
+
+    goals = filteredGoals;
   }
 
   @override
@@ -49,11 +64,7 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.all(8),
                 itemCount: goals.length,
                 itemBuilder: (BuildContext context, int index) {
-                  if (goals[index].days[DateTime.now().weekday - 1]) {
-                    return GoalTileWidget(goal: goals[index]);
-                  } else {
-                    return Container();
-                  }
+                  return GoalTileWidget(goal: goals[index]);
                 },
               ),
             ),
