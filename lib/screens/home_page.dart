@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../components/goal_tile_widget.dart';
-import '../database/database_manager.dart';
 import '../models/goal.dart';
+import '../repositories/goals_repository.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,36 +13,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Goal> goals = [];
-
-  void _fetchGoals() async {
-    goals = await DatabaseManager.instance.fetchGoals();
-
-    _filterGoalsByWeekday(DateTime.now().weekday - 1);
-
-    setState(() {});
-  }
-
-  void _filterGoalsByWeekday(int weekday) {
-    List<Goal> filteredGoals = [];
-
-    for (var goal in goals) {
-      if (goal.days[weekday]) {
-        filteredGoals.add(goal);
-      }
-    }
-
-    goals = filteredGoals;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchGoals();
-  }
+  late GoalsRepository goalsRepository;
+  late List<Goal> goals;
 
   @override
   Widget build(BuildContext context) {
+    goalsRepository = Provider.of<GoalsRepository>(context);
+    goals = goalsRepository.getGoalsByWeekday(DateTime.now().weekday - 1);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -73,14 +52,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add, size: 32),
-        onPressed: () async {
-          bool isModified =
-              await Navigator.pushNamed(context, 'EditGoal') as bool;
-
-          if (isModified) {
-            _fetchGoals();
-          }
-        },
+        onPressed: () => Navigator.pushNamed(context, 'EditGoal'),
       ),
     );
   }
