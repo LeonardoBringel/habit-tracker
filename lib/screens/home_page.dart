@@ -14,6 +14,13 @@ class HomePage extends StatelessWidget {
           style: TextStyle(fontSize: 32),
         ),
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.home,
+            size: 32,
+          ),
+          onPressed: () => Navigator.pushNamed(context, 'MyGoals'),
+        ),
       ),
       body: const GoalsListWidget(
         listTitle: 'Today\'s Goals',
