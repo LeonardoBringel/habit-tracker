@@ -19,9 +19,9 @@ class GoalsRepository extends ChangeNotifier {
     _addGoal(goal);
   }
 
-  void _addGoal(var goal) {
+  void _addGoal(var goal) async {
+    goal.id = await DatabaseManager.instance.addGoal(goal);
     _goals.add(goal);
-    DatabaseManager.instance.addGoal(goal);
     notifyListeners();
   }
 

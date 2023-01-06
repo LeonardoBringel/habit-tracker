@@ -1,11 +1,11 @@
 class Goal {
-  final int id;
+  int id;
   final String name;
   final String description;
   final List<bool> days;
   final int iconId;
 
-  const Goal({
+  Goal({
     this.id = -1,
     required this.name,
     required this.description,
