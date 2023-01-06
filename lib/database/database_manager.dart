@@ -55,13 +55,22 @@ class DatabaseManager {
     return [];
   }
 
-  Future<int?> addGoal(Goal goal) async {
+  Future<int?> addGoal(var goal) async {
     Database database = await instance.database;
 
     return database.insert(
       'tb_goals',
       goal.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  void deleteGoal(var goal) async {
+    Database database = await instance.database;
+
+    database.delete(
+      'tb_goals',
+      where: 'id == ${goal.id}',
     );
   }
 }

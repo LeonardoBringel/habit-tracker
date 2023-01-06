@@ -43,4 +43,10 @@ class GoalsRepository extends ChangeNotifier {
     }
     return filteredGoals;
   }
+
+  void deleteGoal(var goal) {
+    DatabaseManager.instance.deleteGoal(goal);
+    _goals.remove(goal);
+    notifyListeners();
+  }
 }
