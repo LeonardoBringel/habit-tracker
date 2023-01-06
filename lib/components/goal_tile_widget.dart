@@ -42,7 +42,34 @@ class _GoalTileWidgetState extends State<GoalTileWidget> {
               icon: Icons.delete,
               backgroundColor: Colors.red.shade900,
               onPressed: (context) {
-                goalsRepository.deleteGoal(widget.goal);
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Caution'),
+                      content:
+                          const Text('Are you sure about deleting this goal?'),
+                      actions: [
+                        TextButton(
+                          child: const Text('Yes'),
+                          onPressed: () {
+                            goalsRepository.deleteGoal(widget.goal);
+                            Navigator.pop(context);
+                          },
+                        ),
+                        TextButton(
+                          child: const Text('No'),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    );
+                  },
+                );
               },
             ),
           ],
