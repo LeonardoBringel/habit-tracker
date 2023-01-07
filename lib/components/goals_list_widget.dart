@@ -48,6 +48,13 @@ class _GoalsListWidgetState extends State<GoalsListWidget> {
               padding: const EdgeInsets.all(8),
               itemCount: goals.length,
               itemBuilder: (BuildContext context, int index) {
+                if (widget.weekdayFilter) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: GoalTileWidget(goal: goals[index]),
+                  );
+                }
+
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Slidable(
