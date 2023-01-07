@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
 import '../models/goal.dart';
@@ -47,7 +48,53 @@ class _GoalsListWidgetState extends State<GoalsListWidget> {
               padding: const EdgeInsets.all(8),
               itemCount: goals.length,
               itemBuilder: (BuildContext context, int index) {
-                return GoalTileWidget(goal: goals[index]);
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Slidable(
+                    endActionPane: ActionPane(
+                      motion: const ScrollMotion(),
+                      children: [
+                        SlidableAction(
+                          label: 'Delete',
+                          icon: Icons.delete,
+                          backgroundColor: Colors.red.shade900,
+                          onPressed: (context) {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: const Text('Caution'),
+                                  content: const Text(
+                                      'Are you sure about deleting this goal?'),
+                                  actions: [
+                                    TextButton(
+                                      child: const Text('Yes'),
+                                      onPressed: () {
+                                        goalsRepository
+                                            .deleteGoal(goals[index]);
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: const Text('No'),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    child: GoalTileWidget(goal: goals[index]),
+                  ),
+                );
               },
             ),
           ),
