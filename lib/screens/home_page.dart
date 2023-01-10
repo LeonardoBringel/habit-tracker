@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add, size: 32),
-        onPressed: () => Navigator.pushNamed(context, 'EditGoal'),
+        onPressed: () => Navigator.pushNamed(context, 'ManageGoal'),
       ),
     );
   }

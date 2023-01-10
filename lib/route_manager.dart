@@ -15,11 +15,11 @@ class RouteManager {
           },
         );
 
-      case 'EditGoal':
+      case 'ManageGoal':
         return MaterialPageRoute(
           settings: settings,
           builder: (context) {
-            return const EditGoalPage();
+            return const ManageGoalPage();
           },
         );
 

@@ -7,14 +7,14 @@ import '../components/snackbar_message.dart';
 import '../models/goal.dart';
 import '../repositories/goals_repository.dart';
 
-class EditGoalPage extends StatefulWidget {
-  const EditGoalPage({super.key});
+class ManageGoalPage extends StatefulWidget {
+  const ManageGoalPage({super.key});
 
   @override
-  State<EditGoalPage> createState() => _EditGoalPageState();
+  State<ManageGoalPage> createState() => _ManageGoalPageState();
 }
 
-class _EditGoalPageState extends State<EditGoalPage> {
+class _ManageGoalPageState extends State<ManageGoalPage> {
   late GoalsRepository goalsRepository;
 
   List<String> selectedDays = [];
