@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'repositories/goals_repository.dart';
-import 'screens/home_page.dart';
-import 'screens/manage_goal_page.dart';
-import 'screens/my_goals_page.dart';
+import 'route_manager.dart';
 
 void main() {
   runApp(
@@ -26,12 +24,8 @@ class HabitTrackerApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: const ColorScheme.dark(),
       ),
-      home: const HomePage(),
-      routes: {
-        'Home': (context) => const HomePage(),
-        'EditGoal': (context) => const EditGoalPage(),
-        'MyGoals': (context) => const MyGoalsPage(),
-      },
+      initialRoute: 'Home',
+      onGenerateRoute: RouteManager.generateRoute,
     );
   }
 }
