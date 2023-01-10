@@ -8,7 +8,9 @@ import '../models/goal.dart';
 import '../repositories/goals_repository.dart';
 
 class ManageGoalPage extends StatefulWidget {
-  const ManageGoalPage({super.key});
+  const ManageGoalPage({super.key, this.goal});
+
+  final Goal? goal;
 
   @override
   State<ManageGoalPage> createState() => _ManageGoalPageState();
@@ -55,6 +57,21 @@ class _ManageGoalPageState extends State<ManageGoalPage> {
   }
 
   @override
+  void initState() {
+    if (widget.goal != null) {
+      nameFieldController.text = widget.goal!.name;
+      descriptionFieldController.text = widget.goal!.description;
+      selectedIcon = IconData(widget.goal!.iconId, fontFamily: 'MaterialIcons');
+
+      for (int i = 0; i < 7; i++) {
+        dayButtons[i].isSelected = widget.goal!.days[i];
+      }
+    }
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     goalsRepository = Provider.of<GoalsRepository>(context);
 
@@ -83,8 +100,9 @@ class _ManageGoalPageState extends State<ManageGoalPage> {
               } else {
                 goalsRepository.saveGoal(
                   Goal(
+                    id: widget.goal != null ? widget.goal!.id : -1,
                     name: nameFieldController.text,
-                    description: nameFieldController.text,
+                    description: descriptionFieldController.text,
                     days: _getSelectedDays(),
                     iconId: selectedIcon.codePoint,
                   ),

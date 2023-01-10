@@ -65,6 +65,17 @@ class DatabaseManager {
     );
   }
 
+  void updateGoal(var goal) async {
+    Database database = await instance.database;
+
+    database.update(
+      'tb_goals',
+      goal.toJson(),
+      where: 'id == ${goal.id}',
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
   void deleteGoal(var goal) async {
     Database database = await instance.database;
 

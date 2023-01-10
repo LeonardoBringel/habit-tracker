@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'models/goal.dart';
 import 'screens/home_page.dart';
 import 'screens/manage_goal_page.dart';
 import 'screens/my_goals_page.dart';
@@ -19,7 +20,7 @@ class RouteManager {
         return MaterialPageRoute(
           settings: settings,
           builder: (context) {
-            return const ManageGoalPage();
+            return ManageGoalPage(goal: settings.arguments as Goal?);
           },
         );
 

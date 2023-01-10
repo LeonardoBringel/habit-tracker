@@ -13,15 +13,25 @@ class GoalsRepository extends ChangeNotifier {
 
   void saveGoal(var goal) {
     if (goal.id != -1) {
-      // TODO update goal
-      return;
+      _updateGoal(goal);
+    } else {
+      _addGoal(goal);
     }
-    _addGoal(goal);
   }
 
   void _addGoal(var goal) async {
     goal.id = await DatabaseManager.instance.addGoal(goal);
     _goals.add(goal);
+
+    notifyListeners();
+  }
+
+  void _updateGoal(var goal) {
+    DatabaseManager.instance.updateGoal(goal);
+
+    int goalIndex = _goals.indexWhere((element) => element.id == goal.id);
+    _goals[goalIndex] = goal;
+
     notifyListeners();
   }
 
