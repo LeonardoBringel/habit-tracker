@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../components/custom_text_form_field_widget.dart';
 import '../components/day_button_widget.dart';
+import '../components/icons_dropdown_widget.dart';
 import '../components/snackbar_message.dart';
 import '../models/goal.dart';
 import '../repositories/goals_repository.dart';
@@ -24,18 +25,6 @@ class _ManageGoalPageState extends State<ManageGoalPage> {
   final nameFieldController = TextEditingController();
   final descriptionFieldController = TextEditingController();
 
-  List<IconData> icons = const [
-    Icons.auto_awesome,
-    Icons.cake,
-    Icons.school,
-    Icons.favorite_rounded,
-    Icons.credit_card,
-    Icons.rocket_launch_rounded,
-    Icons.airplanemode_on_rounded,
-  ];
-
-  IconData selectedIcon = Icons.auto_awesome;
-
   final List<DayButtonWidget> dayButtons = [
     DayButtonWidget('MON'),
     DayButtonWidget('TUE'),
@@ -45,6 +34,8 @@ class _ManageGoalPageState extends State<ManageGoalPage> {
     DayButtonWidget('SAT'),
     DayButtonWidget('SUN'),
   ];
+
+  final iconsDropdownWidget = IconsDropdownWidget();
 
   List<bool> _getSelectedDays() {
     List<bool> selectedDays = [];
@@ -61,7 +52,8 @@ class _ManageGoalPageState extends State<ManageGoalPage> {
     if (widget.goal != null) {
       nameFieldController.text = widget.goal!.name;
       descriptionFieldController.text = widget.goal!.description;
-      selectedIcon = IconData(widget.goal!.iconId, fontFamily: 'MaterialIcons');
+      iconsDropdownWidget.selectedIcon =
+          IconData(widget.goal!.iconId, fontFamily: 'MaterialIcons');
 
       for (int i = 0; i < 7; i++) {
         dayButtons[i].isSelected = widget.goal!.days[i];
@@ -104,7 +96,7 @@ class _ManageGoalPageState extends State<ManageGoalPage> {
                     name: nameFieldController.text,
                     description: descriptionFieldController.text,
                     days: _getSelectedDays(),
-                    iconId: selectedIcon.codePoint,
+                    iconId: iconsDropdownWidget.selectedIcon.codePoint,
                   ),
                 );
                 Navigator.pop(context);
@@ -123,27 +115,7 @@ class _ManageGoalPageState extends State<ManageGoalPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            DropdownButton(
-              value: selectedIcon,
-              underline: Container(
-                height: 2,
-                color: Colors.yellow,
-              ),
-              onChanged: (value) {
-                setState(() {
-                  selectedIcon = value!;
-                });
-              },
-              items: icons.map<DropdownMenuItem>((value) {
-                return DropdownMenuItem(
-                  value: value,
-                  child: Icon(
-                    value,
-                    color: Colors.yellow,
-                  ),
-                );
-              }).toList(),
-            ),
+            iconsDropdownWidget,
             CustomTextFormFieldWidget(
               controller: nameFieldController,
               maxLength: 24,
