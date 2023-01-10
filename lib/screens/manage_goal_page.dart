@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../components/custom_text_form_field_widget.dart';
-import '../components/day_button_widget.dart';
 import '../components/icons_dropdown_widget.dart';
 import '../components/snackbar_message.dart';
+import '../components/weekday_buttons_widget.dart';
 import '../models/goal.dart';
 import '../repositories/goals_repository.dart';
 
@@ -20,32 +20,11 @@ class ManageGoalPage extends StatefulWidget {
 class _ManageGoalPageState extends State<ManageGoalPage> {
   late GoalsRepository goalsRepository;
 
-  List<String> selectedDays = [];
-
   final nameFieldController = TextEditingController();
   final descriptionFieldController = TextEditingController();
 
-  final List<DayButtonWidget> dayButtons = [
-    DayButtonWidget('MON'),
-    DayButtonWidget('TUE'),
-    DayButtonWidget('WED'),
-    DayButtonWidget('THU'),
-    DayButtonWidget('FRI'),
-    DayButtonWidget('SAT'),
-    DayButtonWidget('SUN'),
-  ];
-
   final iconsDropdownWidget = IconsDropdownWidget();
-
-  List<bool> _getSelectedDays() {
-    List<bool> selectedDays = [];
-
-    for (var dayButton in dayButtons) {
-      selectedDays.add(dayButton.isSelected);
-    }
-
-    return selectedDays;
-  }
+  final weekdayButtonsWidget = WeekdayButtonsWidget();
 
   @override
   void initState() {
@@ -55,9 +34,7 @@ class _ManageGoalPageState extends State<ManageGoalPage> {
       iconsDropdownWidget.selectedIcon =
           IconData(widget.goal!.iconId, fontFamily: 'MaterialIcons');
 
-      for (int i = 0; i < 7; i++) {
-        dayButtons[i].isSelected = widget.goal!.days[i];
-      }
+      weekdayButtonsWidget.setSelectedDays(widget.goal!.days);
     }
 
     super.initState();
@@ -87,7 +64,7 @@ class _ManageGoalPageState extends State<ManageGoalPage> {
             onPressed: () {
               if (nameFieldController.text.isEmpty) {
                 snackbarMessage(context, 'Every goal must have a name!');
-              } else if (!_getSelectedDays().contains(true)) {
+              } else if (!weekdayButtonsWidget.anySelected()) {
                 snackbarMessage(context, 'At least one day must be selected.');
               } else {
                 goalsRepository.saveGoal(
@@ -95,7 +72,7 @@ class _ManageGoalPageState extends State<ManageGoalPage> {
                     id: widget.goal != null ? widget.goal!.id : -1,
                     name: nameFieldController.text,
                     description: descriptionFieldController.text,
-                    days: _getSelectedDays(),
+                    days: weekdayButtonsWidget.getSelectedDays(),
                     iconId: iconsDropdownWidget.selectedIcon.codePoint,
                   ),
                 );
@@ -127,18 +104,7 @@ class _ManageGoalPageState extends State<ManageGoalPage> {
               maxLines: 5,
               hintText: 'A short description of my goal',
             ),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: dayButtons.sublist(0, 4),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: dayButtons.sublist(4),
-                )
-              ],
-            )
+            weekdayButtonsWidget,
           ],
         ),
       ),
