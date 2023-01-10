@@ -5,6 +5,7 @@ import '../models/goal.dart';
 
 class GoalsRepository extends ChangeNotifier {
   List<Goal> _goals = [];
+  bool isInitalized = false;
 
   void _initGoals() async {
     _goals = await DatabaseManager.instance.fetchGoals();
@@ -36,8 +37,9 @@ class GoalsRepository extends ChangeNotifier {
   }
 
   List<Goal> getGoals() {
-    if (_goals.isEmpty) {
+    if (!isInitalized) {
       _initGoals();
+      isInitalized = true;
     }
 
     return _goals;
