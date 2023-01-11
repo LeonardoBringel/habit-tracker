@@ -1,5 +1,9 @@
-class Goal {
+import 'database_element.dart';
+
+class Goal implements DatabaseElement {
+  @override
   int id;
+
   final String name;
   final String description;
   final List<bool> days;
@@ -28,6 +32,7 @@ class Goal {
         ],
         iconId = json['icon_id'];
 
+  @override
   Map<String, dynamic> toJson() {
     var json = <String, dynamic>{
       'id': id,

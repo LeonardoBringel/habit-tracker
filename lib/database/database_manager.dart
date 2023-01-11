@@ -44,10 +44,44 @@ class DatabaseManager {
     ''');
   }
 
-  Future<List<Goal>> fetchGoals() async {
-    Database database = await instance.database;
+  Future<List<Map<String, dynamic>>> _fetchDatabaseElement(String table) async {
+    var database = await instance.database;
+    return await database.query(table);
+  }
 
-    List<Map<String, dynamic>> maps = await database.query('tb_goals');
+  Future<int?> _addDatabaseElement(String table, var databaseElement) async {
+    var database = await instance.database;
+
+    return database.insert(
+      table,
+      databaseElement.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  void _updateDatabaseElement(String table, var databaseElement) async {
+    var database = await instance.database;
+
+    database.update(
+      table,
+      databaseElement.toJson(),
+      where: 'id == ${databaseElement.id}',
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  void _deleteDatabaseElement(String table, var databaseElement) async {
+    var database = await instance.database;
+
+    database.delete(
+      table,
+      where: 'id == ${databaseElement.id}',
+    );
+  }
+
+  // -- Goals Methods --
+  Future<List<Goal>> fetchGoals() async {
+    List<Map<String, dynamic>> maps = await _fetchDatabaseElement('tb_goals');
 
     if (maps.isNotEmpty) {
       return maps.map((map) => Goal.fromJson(map)).toList();
@@ -56,32 +90,14 @@ class DatabaseManager {
   }
 
   Future<int?> addGoal(var goal) async {
-    Database database = await instance.database;
-
-    return database.insert(
-      'tb_goals',
-      goal.toJson(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    return await _addDatabaseElement('tb_goals', goal);
   }
 
   void updateGoal(var goal) async {
-    Database database = await instance.database;
-
-    database.update(
-      'tb_goals',
-      goal.toJson(),
-      where: 'id == ${goal.id}',
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    _updateDatabaseElement('tb_goals', goal);
   }
 
   void deleteGoal(var goal) async {
-    Database database = await instance.database;
-
-    database.delete(
-      'tb_goals',
-      where: 'id == ${goal.id}',
-    );
+    _deleteDatabaseElement('tb_goals', goal);
   }
 }
