@@ -40,6 +40,26 @@ class _ManageGoalPageState extends State<ManageGoalPage> {
     super.initState();
   }
 
+  void _saveGoal() {
+    if (nameFieldController.text.isEmpty) {
+      snackbarMessage(context, 'Every goal must have a name!');
+    } else if (!weekdayButtonsWidget.anySelected()) {
+      snackbarMessage(context, 'At least one day must be selected.');
+    } else {
+      goalsRepository.saveGoal(
+        Goal(
+          id: widget.goal != null ? widget.goal!.id : -1,
+          name: nameFieldController.text,
+          description: descriptionFieldController.text,
+          days: weekdayButtonsWidget.getSelectedDays(),
+          iconId: iconsDropdownWidget.selectedIcon.codePoint,
+        ),
+      );
+      Navigator.pop(context);
+      snackbarMessage(context, 'Goal saved!');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     goalsRepository = Provider.of<GoalsRepository>(context);
@@ -61,25 +81,7 @@ class _ManageGoalPageState extends State<ManageGoalPage> {
         ),
         actions: [
           TextButton(
-            onPressed: () {
-              if (nameFieldController.text.isEmpty) {
-                snackbarMessage(context, 'Every goal must have a name!');
-              } else if (!weekdayButtonsWidget.anySelected()) {
-                snackbarMessage(context, 'At least one day must be selected.');
-              } else {
-                goalsRepository.saveGoal(
-                  Goal(
-                    id: widget.goal != null ? widget.goal!.id : -1,
-                    name: nameFieldController.text,
-                    description: descriptionFieldController.text,
-                    days: weekdayButtonsWidget.getSelectedDays(),
-                    iconId: iconsDropdownWidget.selectedIcon.codePoint,
-                  ),
-                );
-                Navigator.pop(context);
-                snackbarMessage(context, 'Goal saved!');
-              }
-            },
+            onPressed: _saveGoal,
             child: const Text(
               'Done',
               style: TextStyle(fontSize: 18),
