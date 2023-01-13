@@ -102,4 +102,18 @@ class DaysRepository extends ChangeNotifier {
     }
     return false;
   }
+
+  void removeGoal(int goalId) {
+    var goalDays = [];
+
+    for (var day in _getDays()) {
+      if (day.completedGoalsId.contains(goalId)) {
+        goalDays.add(day);
+      }
+    }
+
+    for (var day in goalDays) {
+      _removeCompletedGoal(day.date, goalId);
+    }
+  }
 }

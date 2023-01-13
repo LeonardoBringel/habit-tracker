@@ -3,6 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
 import '../models/goal.dart';
+import '../repositories/days_repository.dart';
 import '../repositories/goals_repository.dart';
 import 'goal_tile_widget.dart';
 
@@ -22,11 +23,13 @@ class GoalsListWidget extends StatefulWidget {
 
 class _GoalsListWidgetState extends State<GoalsListWidget> {
   late GoalsRepository goalsRepository;
+  late DaysRepository daysRepository;
   late List<Goal> goals;
 
   @override
   Widget build(BuildContext context) {
     goalsRepository = Provider.of<GoalsRepository>(context);
+    daysRepository = Provider.of<DaysRepository>(context);
 
     if (widget.weekdayFilter) {
       goals = goalsRepository.getGoalsByWeekday(DateTime.now().weekday - 1);
@@ -79,6 +82,8 @@ class _GoalsListWidgetState extends State<GoalsListWidget> {
                                     TextButton(
                                       child: const Text('Yes'),
                                       onPressed: () {
+                                        daysRepository
+                                            .removeGoal(goals[index].id);
                                         goalsRepository
                                             .deleteGoal(goals[index]);
                                         Navigator.pop(context);
