@@ -8,17 +8,10 @@ import '../components/weekday_buttons_widget.dart';
 import '../models/goal.dart';
 import '../repositories/goals_repository.dart';
 
-class ManageGoalPage extends StatefulWidget {
-  const ManageGoalPage({super.key, this.goal});
+class ManageGoalPage extends StatelessWidget {
+  ManageGoalPage({super.key, this.goal});
 
   final Goal? goal;
-
-  @override
-  State<ManageGoalPage> createState() => _ManageGoalPageState();
-}
-
-class _ManageGoalPageState extends State<ManageGoalPage> {
-  late GoalsRepository goalsRepository;
 
   final nameFieldController = TextEditingController();
   final descriptionFieldController = TextEditingController();
@@ -26,21 +19,7 @@ class _ManageGoalPageState extends State<ManageGoalPage> {
   final iconsDropdownWidget = IconsDropdownWidget();
   final weekdayButtonsWidget = WeekdayButtonsWidget();
 
-  @override
-  void initState() {
-    if (widget.goal != null) {
-      nameFieldController.text = widget.goal!.name;
-      descriptionFieldController.text = widget.goal!.description;
-      iconsDropdownWidget.selectedIcon =
-          IconData(widget.goal!.iconId, fontFamily: 'MaterialIcons');
-
-      weekdayButtonsWidget.setSelectedDays(widget.goal!.days);
-    }
-
-    super.initState();
-  }
-
-  void _saveGoal() {
+  void _saveGoal(BuildContext context, var goalsRepository) {
     if (nameFieldController.text.isEmpty) {
       snackbarMessage(context, 'Every goal must have a name!');
     } else if (!weekdayButtonsWidget.anySelected()) {
@@ -48,7 +27,7 @@ class _ManageGoalPageState extends State<ManageGoalPage> {
     } else {
       goalsRepository.saveGoal(
         Goal(
-          id: widget.goal != null ? widget.goal!.id : -1,
+          id: goal != null ? goal!.id : -1,
           name: nameFieldController.text,
           description: descriptionFieldController.text,
           days: weekdayButtonsWidget.getSelectedDays(),
@@ -62,7 +41,16 @@ class _ManageGoalPageState extends State<ManageGoalPage> {
 
   @override
   Widget build(BuildContext context) {
-    goalsRepository = Provider.of<GoalsRepository>(context);
+    GoalsRepository goalsRepository = Provider.of<GoalsRepository>(context);
+
+    if (goal != null) {
+      nameFieldController.text = goal!.name;
+      descriptionFieldController.text = goal!.description;
+      iconsDropdownWidget.selectedIcon =
+          IconData(goal!.iconId, fontFamily: 'MaterialIcons');
+
+      weekdayButtonsWidget.setSelectedDays(goal!.days);
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -81,7 +69,7 @@ class _ManageGoalPageState extends State<ManageGoalPage> {
         ),
         actions: [
           TextButton(
-            onPressed: _saveGoal,
+            onPressed: () => _saveGoal(context, goalsRepository),
             child: const Text(
               'Done',
               style: TextStyle(fontSize: 18),
