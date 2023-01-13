@@ -32,6 +32,7 @@ class DaysRepository extends ChangeNotifier {
       if (day.date == date) {
         day.completedGoalsId.add(goalId);
         _updateDay(day);
+        return;
       }
     }
 
