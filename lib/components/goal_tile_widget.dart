@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/goal.dart';
+import '../repositories/days_repository.dart';
 
-class GoalTileWidget extends StatelessWidget {
-  const GoalTileWidget({super.key, required this.goal});
+class GoalTileWidget extends StatefulWidget {
+  const GoalTileWidget({
+    super.key,
+    required this.goal,
+    this.isGoalEditable = false,
+  });
 
   final Goal goal;
+  final bool isGoalEditable;
 
   static const Map<int, String> weekdays = {
     1: 'MON',
@@ -18,35 +25,52 @@ class GoalTileWidget extends StatelessWidget {
   };
 
   @override
+  State<GoalTileWidget> createState() => _GoalTileWidgetState();
+}
+
+class _GoalTileWidgetState extends State<GoalTileWidget> {
+  late DaysRepository daysRepository;
+
+  @override
   Widget build(BuildContext context) {
+    daysRepository = Provider.of<DaysRepository>(context);
+
     return InkWell(
       child: ListTile(
         title: Text(
-          goal.name,
-          style: const TextStyle(fontSize: 24),
+          widget.goal.name,
+          style:
+              daysRepository.isGoalCompleted(DateTime.now(), widget.goal.id) &
+                      !widget.isGoalEditable
+                  ? const TextStyle(
+                      fontSize: 24, decoration: TextDecoration.lineThrough)
+                  : const TextStyle(fontSize: 24),
           textAlign: TextAlign.center,
         ),
         subtitle: Text(
-          goal.days.contains(false)
-              ? weekdays[DateTime.now().weekday]!
+          widget.goal.days.contains(false)
+              ? GoalTileWidget.weekdays[DateTime.now().weekday]!
               : 'Daily',
           style: const TextStyle(fontSize: 18),
           textAlign: TextAlign.center,
         ),
         leading: Icon(
           IconData(
-            goal.iconId,
+            widget.goal.iconId,
             fontFamily: 'MaterialIcons',
           ),
         ),
-        trailing: const Icon(Icons.check_box_outlined),
       ),
       onTap: () {
-        Navigator.pushNamed(
-          context,
-          'ManageGoal',
-          arguments: goal,
-        );
+        if (widget.isGoalEditable) {
+          Navigator.pushNamed(
+            context,
+            'ManageGoal',
+            arguments: widget.goal,
+          );
+        } else {
+          daysRepository.updateGoalStatus(DateTime.now(), widget.goal.id);
+        }
       },
     );
   }

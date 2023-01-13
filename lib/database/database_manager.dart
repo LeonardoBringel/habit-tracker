@@ -1,6 +1,7 @@
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../models/day.dart';
 import '../models/goal.dart';
 
 class DatabaseManager {
@@ -21,7 +22,7 @@ class DatabaseManager {
 
     return await openDatabase(
       databasePath,
-      version: 1,
+      version: 2,
       onCreate: _onCreate,
     );
   }
@@ -40,6 +41,14 @@ class DatabaseManager {
         is_on_saturday BOOLEAN,
         is_on_sunday BOOLEAN,
         icon_id INTEGER
+      );
+    ''');
+
+    await db.execute('''
+      CREATE TABLE tb_days(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        completed_goals_id TEXT,
+        date TEXT
       );
     ''');
   }
@@ -99,5 +108,27 @@ class DatabaseManager {
 
   void deleteGoal(var goal) async {
     _deleteDatabaseElement('tb_goals', goal);
+  }
+
+  // -- Days Methods --
+  Future<List<Day>> fetchDays() async {
+    List<Map<String, dynamic>> maps = await _fetchDatabaseElement('tb_days');
+
+    if (maps.isNotEmpty) {
+      return maps.map((map) => Day.fromJson(map)).toList();
+    }
+    return [];
+  }
+
+  Future<int?> addDay(var day) async {
+    return await _addDatabaseElement('tb_days', day);
+  }
+
+  void updateDay(var day) async {
+    _updateDatabaseElement('tb_days', day);
+  }
+
+  void deleteDay(var day) async {
+    _deleteDatabaseElement('tb_days', day);
   }
 }
