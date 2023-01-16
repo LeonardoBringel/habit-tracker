@@ -46,77 +46,82 @@ class _GoalsListWidgetState extends State<GoalsListWidget> {
             style: const TextStyle(fontSize: 28),
           ),
           const Divider(),
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(8),
-              itemCount: goals.length,
-              itemBuilder: (BuildContext context, int index) {
-                if (widget.weekdayFilter) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: GoalTileWidget(
-                      goal: goals[index],
+          _listViewBuilder(),
+        ],
+      ),
+    );
+  }
+
+  Widget _listViewBuilder() {
+    return Expanded(
+      child: ListView.builder(
+        padding: const EdgeInsets.all(8),
+        itemCount: goals.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: widget.weekdayFilter
+                ? _completableGoalTile(index)
+                : _editableGoalTile(index),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _editableGoalTile(int index) {
+    return Slidable(
+      endActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        children: [
+          SlidableAction(
+            label: 'Delete',
+            icon: Icons.delete,
+            backgroundColor: Colors.red.shade900,
+            onPressed: (context) {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text('Caution'),
+                    content:
+                        const Text('Are you sure about deleting this goal?'),
+                    actions: [
+                      TextButton(
+                        child: const Text('Yes'),
+                        onPressed: () {
+                          daysRepository.removeGoal(goals[index].id);
+                          goalsRepository.deleteGoal(goals[index]);
+                          Navigator.pop(context);
+                        },
+                      ),
+                      TextButton(
+                        child: const Text('No'),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   );
-                }
-
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: Slidable(
-                    endActionPane: ActionPane(
-                      motion: const ScrollMotion(),
-                      children: [
-                        SlidableAction(
-                          label: 'Delete',
-                          icon: Icons.delete,
-                          backgroundColor: Colors.red.shade900,
-                          onPressed: (context) {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: const Text('Caution'),
-                                  content: const Text(
-                                      'Are you sure about deleting this goal?'),
-                                  actions: [
-                                    TextButton(
-                                      child: const Text('Yes'),
-                                      onPressed: () {
-                                        daysRepository
-                                            .removeGoal(goals[index].id);
-                                        goalsRepository
-                                            .deleteGoal(goals[index]);
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                    TextButton(
-                                      child: const Text('No'),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  ],
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    child: GoalTileWidget(
-                      goal: goals[index],
-                      isGoalEditable: true,
-                    ),
-                  ),
-                );
-              },
-            ),
+                },
+              );
+            },
           ),
         ],
       ),
+      child: GoalTileWidget(
+        goal: goals[index],
+        isGoalEditable: true,
+      ),
+    );
+  }
+
+  Widget _completableGoalTile(int index) {
+    return GoalTileWidget(
+      goal: goals[index],
     );
   }
 }
