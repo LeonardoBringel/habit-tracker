@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../models/goal.dart';
-import '../repositories/days_repository.dart';
 
 class GoalTileWidget extends StatefulWidget {
   const GoalTileWidget({
     super.key,
     required this.goal,
-    this.isGoalEditable = false,
+    this.isCompleted = false,
   });
 
   final Goal goal;
-  final bool isGoalEditable;
+  final bool isCompleted;
 
   static const Map<int, String> weekdays = {
     1: 'MON',
@@ -29,49 +27,30 @@ class GoalTileWidget extends StatefulWidget {
 }
 
 class _GoalTileWidgetState extends State<GoalTileWidget> {
-  late DaysRepository daysRepository;
-
   @override
   Widget build(BuildContext context) {
-    daysRepository = Provider.of<DaysRepository>(context);
-
-    return InkWell(
-      child: ListTile(
-        title: Text(
-          widget.goal.name,
-          style:
-              daysRepository.isGoalCompleted(DateTime.now(), widget.goal.id) &
-                      !widget.isGoalEditable
-                  ? const TextStyle(
-                      fontSize: 24, decoration: TextDecoration.lineThrough)
-                  : const TextStyle(fontSize: 24),
-          textAlign: TextAlign.center,
-        ),
-        subtitle: Text(
-          widget.goal.days.contains(false)
-              ? GoalTileWidget.weekdays[DateTime.now().weekday]!
-              : 'Daily',
-          style: const TextStyle(fontSize: 18),
-          textAlign: TextAlign.center,
-        ),
-        leading: Icon(
-          IconData(
-            widget.goal.iconId,
-            fontFamily: 'MaterialIcons',
-          ),
+    return ListTile(
+      title: Text(
+        widget.goal.name,
+        style: widget.isCompleted
+            ? const TextStyle(
+                fontSize: 24, decoration: TextDecoration.lineThrough)
+            : const TextStyle(fontSize: 24),
+        textAlign: TextAlign.center,
+      ),
+      subtitle: Text(
+        widget.goal.days.contains(false)
+            ? GoalTileWidget.weekdays[DateTime.now().weekday]!
+            : 'Daily',
+        style: const TextStyle(fontSize: 18),
+        textAlign: TextAlign.center,
+      ),
+      leading: Icon(
+        IconData(
+          widget.goal.iconId,
+          fontFamily: 'MaterialIcons',
         ),
       ),
-      onTap: () {
-        if (widget.isGoalEditable) {
-          Navigator.pushNamed(
-            context,
-            'ManageGoal',
-            arguments: widget.goal,
-          );
-        } else {
-          daysRepository.updateGoalStatus(DateTime.now(), widget.goal.id);
-        }
-      },
     );
   }
 }

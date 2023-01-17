@@ -60,9 +60,25 @@ class _GoalsListWidgetState extends State<GoalsListWidget> {
         itemBuilder: (BuildContext context, int index) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 10),
-            child: widget.weekdayFilter
-                ? _completableGoalTile(index)
-                : _editableGoalTile(index),
+            child: InkWell(
+              child: widget.weekdayFilter
+                  ? _completableGoalTile(index)
+                  : _editableGoalTile(index),
+              onTap: () {
+                if (widget.weekdayFilter) {
+                  daysRepository.updateGoalStatus(
+                    DateTime.now(),
+                    goals[index].id,
+                  );
+                } else {
+                  Navigator.pushNamed(
+                    context,
+                    'ManageGoal',
+                    arguments: goals[index],
+                  );
+                }
+              },
+            ),
           );
         },
       ),
@@ -114,7 +130,6 @@ class _GoalsListWidgetState extends State<GoalsListWidget> {
       ),
       child: GoalTileWidget(
         goal: goals[index],
-        isGoalEditable: true,
       ),
     );
   }
@@ -122,6 +137,10 @@ class _GoalsListWidgetState extends State<GoalsListWidget> {
   Widget _completableGoalTile(int index) {
     return GoalTileWidget(
       goal: goals[index],
+      isCompleted: daysRepository.isGoalCompleted(
+        DateTime.now(),
+        goals[index].id,
+      ),
     );
   }
 }
