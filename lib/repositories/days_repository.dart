@@ -16,37 +16,28 @@ class DaysRepository extends ChangeNotifier {
     date = DateUtils.dateOnly(date);
     var day = _getDayByDate(date);
 
-    if (day != null) {
-      if (day.completedGoalsId.contains(goalId)) {
-        _removeCompletedGoal(date, goalId);
-      } else {
-        _addCompletedGoal(date, goalId);
-      }
-    } else {
-      _addCompletedGoal(date, goalId);
-    }
-  }
-
-  void _addCompletedGoal(DateTime date, var goalId) {
-    for (var day in _getDays()) {
-      if (day.date == date) {
-        day.completedGoalsId.add(goalId);
-        _updateDay(day);
-        return;
-      }
-    }
-
-    _addDay(
-      Day(
+    if (day == null) {
+      day = Day(
         completedGoalsId: [goalId],
         date: date,
-      ),
-    );
+      );
+
+      _addDay(day);
+    } else {
+      if (day.completedGoalsId.contains(goalId)) {
+        _removeCompletedGoal(day, goalId);
+      } else {
+        _addCompletedGoal(day, goalId);
+      }
+    }
   }
 
-  void _removeCompletedGoal(DateTime date, var goalId) {
-    var day = _getDayByDate(date);
+  void _addCompletedGoal(var day, var goalId) {
+    day.completedGoalsId.add(goalId);
+    _updateDay(day);
+  }
 
+  void _removeCompletedGoal(var day, var goalId) {
     day!.completedGoalsId.remove(goalId);
 
     if (day.completedGoalsId.isEmpty) {
@@ -113,7 +104,7 @@ class DaysRepository extends ChangeNotifier {
     }
 
     for (var day in goalDays) {
-      _removeCompletedGoal(day.date, goalId);
+      _removeCompletedGoal(day, goalId);
     }
   }
 }
