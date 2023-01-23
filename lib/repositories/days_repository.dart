@@ -78,6 +78,12 @@ class DaysRepository extends ChangeNotifier {
     }
   }
 
+  List<Day> getDaysByGoalId(int goalId) {
+    return _getDays()
+        .where((element) => element.completedGoalsId.contains(goalId))
+        .toList();
+  }
+
   void _deleteDay(var day) {
     DatabaseManager.instance.deleteDay(day);
     _days.remove(day);
