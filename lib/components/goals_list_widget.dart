@@ -87,6 +87,23 @@ class _GoalsListWidgetState extends State<GoalsListWidget> {
 
   Widget _editableGoalTile(int index) {
     return Slidable(
+      startActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        children: [
+          SlidableAction(
+            label: 'Edit',
+            icon: Icons.edit,
+            backgroundColor: Colors.grey,
+            onPressed: (context) {
+              Navigator.pushNamed(
+                context,
+                'ManageGoal',
+                arguments: goals[index],
+              );
+            },
+          ),
+        ],
+      ),
       endActionPane: ActionPane(
         motion: const ScrollMotion(),
         children: [
