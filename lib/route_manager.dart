@@ -4,6 +4,7 @@ import 'models/goal.dart';
 import 'screens/home_page.dart';
 import 'screens/manage_goal_page.dart';
 import 'screens/my_goals_page.dart';
+import 'screens/progress_page.dart';
 
 class RouteManager {
   static Route generateRoute(RouteSettings settings) {
@@ -29,6 +30,14 @@ class RouteManager {
           settings: settings,
           builder: (context) {
             return const MyGoalsPage();
+          },
+        );
+
+      case 'Progress':
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (context) {
+            return ProgressPage(goal: settings.arguments as Goal);
           },
         );
 

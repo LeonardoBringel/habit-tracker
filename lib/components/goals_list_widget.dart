@@ -73,7 +73,7 @@ class _GoalsListWidgetState extends State<GoalsListWidget> {
                 } else {
                   Navigator.pushNamed(
                     context,
-                    'ManageGoal',
+                    'Progress',
                     arguments: goals[index],
                   );
                 }
