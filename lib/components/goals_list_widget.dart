@@ -46,7 +46,7 @@ class _GoalsListWidgetState extends State<GoalsListWidget> {
             style: const TextStyle(fontSize: 28),
           ),
           const Divider(),
-          _listViewBuilder(),
+          goals.isNotEmpty ? _listViewBuilder() : _emptyGoalsMessage(),
         ],
       ),
     );
@@ -157,6 +157,32 @@ class _GoalsListWidgetState extends State<GoalsListWidget> {
       isCompleted: daysRepository.isGoalCompleted(
         DateTime.now(),
         goals[index].id,
+      ),
+    );
+  }
+
+  Widget _emptyGoalsMessage() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 100, 20, 50),
+      child: Column(
+        children: [
+          Image.asset(
+            'assets/images/spooky_ghost.png',
+            height: 200,
+            width: 200,
+          ),
+          const SizedBox(height: 50),
+          const Text(
+            'Oooooops!',
+            style: TextStyle(fontSize: 24),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            'This place looks empty, let\'s create some goals before more ghosts arrive!',
+            style: TextStyle(fontSize: 18),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }
