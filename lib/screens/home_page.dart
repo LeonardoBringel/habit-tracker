@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Habit Tracker',
+          'Today\'s Goals',
           style: TextStyle(fontSize: 32),
         ),
         centerTitle: true,
@@ -22,10 +22,7 @@ class HomePage extends StatelessWidget {
           onPressed: () => Navigator.pushNamed(context, 'MyGoals'),
         ),
       ),
-      body: const GoalsListWidget(
-        listTitle: 'Today\'s Goals',
-        weekdayFilter: true,
-      ),
+      body: const GoalsListWidget(weekdayFilter: true),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add, size: 32),
         onPressed: () => Navigator.pushNamed(context, 'ManageGoal'),

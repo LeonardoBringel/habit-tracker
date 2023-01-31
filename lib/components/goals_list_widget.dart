@@ -8,13 +8,8 @@ import '../repositories/goals_repository.dart';
 import 'goal_tile_widget.dart';
 
 class GoalsListWidget extends StatefulWidget {
-  const GoalsListWidget({
-    super.key,
-    required this.weekdayFilter,
-    required this.listTitle,
-  });
+  const GoalsListWidget({super.key, required this.weekdayFilter});
 
-  final String listTitle;
   final bool weekdayFilter;
 
   @override
@@ -39,49 +34,38 @@ class _GoalsListWidgetState extends State<GoalsListWidget> {
 
     return Padding(
       padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          Text(
-            widget.listTitle,
-            style: const TextStyle(fontSize: 28),
-          ),
-          const Divider(),
-          goals.isNotEmpty ? _listViewBuilder() : _emptyGoalsMessage(),
-        ],
-      ),
+      child: goals.isNotEmpty ? _listViewBuilder() : _emptyGoalsMessage(),
     );
   }
 
   Widget _listViewBuilder() {
-    return Expanded(
-      child: ListView.builder(
-        padding: const EdgeInsets.all(8),
-        itemCount: goals.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: InkWell(
-              child: widget.weekdayFilter
-                  ? _completableGoalTile(index)
-                  : _editableGoalTile(index),
-              onTap: () {
-                if (widget.weekdayFilter) {
-                  daysRepository.updateGoalStatus(
-                    DateTime.now(),
-                    goals[index].id,
-                  );
-                } else {
-                  Navigator.pushNamed(
-                    context,
-                    'Progress',
-                    arguments: goals[index],
-                  );
-                }
-              },
-            ),
-          );
-        },
-      ),
+    return ListView.builder(
+      padding: const EdgeInsets.all(8),
+      itemCount: goals.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: InkWell(
+            child: widget.weekdayFilter
+                ? _completableGoalTile(index)
+                : _editableGoalTile(index),
+            onTap: () {
+              if (widget.weekdayFilter) {
+                daysRepository.updateGoalStatus(
+                  DateTime.now(),
+                  goals[index].id,
+                );
+              } else {
+                Navigator.pushNamed(
+                  context,
+                  'Progress',
+                  arguments: goals[index],
+                );
+              }
+            },
+          ),
+        );
+      },
     );
   }
 

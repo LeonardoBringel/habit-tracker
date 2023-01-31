@@ -10,15 +10,12 @@ class MyGoalsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Habit Tracker',
+          'My Goals',
           style: TextStyle(fontSize: 32),
         ),
         centerTitle: true,
       ),
-      body: const GoalsListWidget(
-        listTitle: 'My Goals',
-        weekdayFilter: false,
-      ),
+      body: const GoalsListWidget(weekdayFilter: false),
     );
   }
 }
