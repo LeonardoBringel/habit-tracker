@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../models/goal.dart';
 import '../repositories/days_repository.dart';
 import '../repositories/goals_repository.dart';
+import 'empty_goals_message_widget.dart';
 import 'goal_tile_widget.dart';
 
 class GoalsListWidget extends StatefulWidget {
@@ -34,7 +35,9 @@ class _GoalsListWidgetState extends State<GoalsListWidget> {
 
     return Padding(
       padding: const EdgeInsets.all(20),
-      child: goals.isNotEmpty ? _listViewBuilder() : _emptyGoalsMessage(),
+      child: goals.isNotEmpty
+          ? _listViewBuilder()
+          : const EmptyGoalsMessageWidget(),
     );
   }
 
@@ -141,32 +144,6 @@ class _GoalsListWidgetState extends State<GoalsListWidget> {
       isCompleted: daysRepository.isGoalCompleted(
         DateTime.now(),
         goals[index].id,
-      ),
-    );
-  }
-
-  Widget _emptyGoalsMessage() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 100, 20, 50),
-      child: Column(
-        children: [
-          Image.asset(
-            'assets/images/spooky_ghost.png',
-            height: 200,
-            width: 200,
-          ),
-          const SizedBox(height: 50),
-          const Text(
-            'Oooooops!',
-            style: TextStyle(fontSize: 24),
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            'This place looks empty, let\'s create some goals before more ghosts arrive!',
-            style: TextStyle(fontSize: 18),
-            textAlign: TextAlign.center,
-          ),
-        ],
       ),
     );
   }
