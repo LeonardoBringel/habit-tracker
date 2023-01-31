@@ -33,42 +33,40 @@ class _GoalsListWidgetState extends State<GoalsListWidget> {
       goals = goalsRepository.getGoals();
     }
 
+    if (goals.isEmpty) {
+      return const EmptyGoalsMessageWidget();
+    }
+
     return Padding(
       padding: const EdgeInsets.all(20),
-      child: goals.isNotEmpty
-          ? _listViewBuilder()
-          : const EmptyGoalsMessageWidget(),
-    );
-  }
-
-  Widget _listViewBuilder() {
-    return ListView.builder(
-      padding: const EdgeInsets.all(8),
-      itemCount: goals.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: InkWell(
-            child: widget.weekdayFilter
-                ? _completableGoalTile(index)
-                : _editableGoalTile(index),
-            onTap: () {
-              if (widget.weekdayFilter) {
-                daysRepository.updateGoalStatus(
-                  DateTime.now(),
-                  goals[index].id,
-                );
-              } else {
-                Navigator.pushNamed(
-                  context,
-                  'Progress',
-                  arguments: goals[index],
-                );
-              }
-            },
-          ),
-        );
-      },
+      child: ListView.builder(
+        padding: const EdgeInsets.all(8),
+        itemCount: goals.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: InkWell(
+              child: widget.weekdayFilter
+                  ? _completableGoalTile(index)
+                  : _editableGoalTile(index),
+              onTap: () {
+                if (widget.weekdayFilter) {
+                  daysRepository.updateGoalStatus(
+                    DateTime.now(),
+                    goals[index].id,
+                  );
+                } else {
+                  Navigator.pushNamed(
+                    context,
+                    'Progress',
+                    arguments: goals[index],
+                  );
+                }
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 
