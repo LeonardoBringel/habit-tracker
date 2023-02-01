@@ -57,7 +57,7 @@ class ProgressPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           goal.name,
-          style: const TextStyle(fontSize: 32),
+          style: TextStyle(fontSize: goal.name.length <= 16 ? 32 : 28),
         ),
         centerTitle: true,
       ),
