@@ -55,9 +55,9 @@ class ManageGoalPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Habit Tracker',
-          style: TextStyle(fontSize: 32),
+        title: Text(
+          goal == null ? 'New Goal' : 'Edit Goal',
+          style: const TextStyle(fontSize: 32),
         ),
         centerTitle: true,
         leadingWidth: 80,
@@ -78,26 +78,34 @@ class ManageGoalPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            iconsCarouselWidget,
-            CustomTextFormFieldWidget(
-              controller: nameFieldController,
-              maxLength: 24,
-              hintText: 'My Goal',
-            ),
-            CustomTextFormFieldWidget(
-              controller: descriptionFieldController,
-              maxLength: 165,
-              maxLines: 5,
-              hintText: 'A short description of my goal',
-            ),
-            weekdayButtonsWidget,
-          ],
+      body: GestureDetector(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              const SizedBox(height: 50),
+              iconsCarouselWidget,
+              const SizedBox(height: 60),
+              CustomTextFormFieldWidget(
+                controller: nameFieldController,
+                maxLength: 24,
+                hintText: 'My Goal',
+              ),
+              const SizedBox(height: 25),
+              CustomTextFormFieldWidget(
+                controller: descriptionFieldController,
+                maxLength: 165,
+                maxLines: 5,
+                hintText: 'A short description of my goal',
+              ),
+              const SizedBox(height: 100),
+              weekdayButtonsWidget,
+            ],
+          ),
         ),
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
       ),
     );
   }
