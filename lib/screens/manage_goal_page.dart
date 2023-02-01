@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../components/custom_text_form_field_widget.dart';
-import '../components/icons_dropdown_widget.dart';
+import '../components/icons_carousel_widget.dart';
 import '../components/snackbar_message.dart';
 import '../components/weekday_buttons_widget.dart';
 import '../models/goal.dart';
@@ -16,7 +16,7 @@ class ManageGoalPage extends StatelessWidget {
   final nameFieldController = TextEditingController();
   final descriptionFieldController = TextEditingController();
 
-  final iconsDropdownWidget = IconsDropdownWidget();
+  final iconsCarouselWidget = IconsCarouselWidget();
   final weekdayButtonsWidget = WeekdayButtonsWidget();
 
   void _saveGoal(BuildContext context, var goalsRepository) {
@@ -31,7 +31,7 @@ class ManageGoalPage extends StatelessWidget {
           name: nameFieldController.text,
           description: descriptionFieldController.text,
           days: weekdayButtonsWidget.getSelectedDays(),
-          iconId: iconsDropdownWidget.selectedIcon.codePoint,
+          iconId: iconsCarouselWidget.selectedIcon.codePoint,
         ),
       );
       Navigator.pop(context);
@@ -46,7 +46,8 @@ class ManageGoalPage extends StatelessWidget {
     if (goal != null) {
       nameFieldController.text = goal!.name;
       descriptionFieldController.text = goal!.description;
-      iconsDropdownWidget.selectedIcon =
+
+      iconsCarouselWidget.selectedIcon =
           IconData(goal!.iconId, fontFamily: 'MaterialIcons');
 
       weekdayButtonsWidget.setSelectedDays(goal!.days);
@@ -82,7 +83,7 @@ class ManageGoalPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            iconsDropdownWidget,
+            iconsCarouselWidget,
             CustomTextFormFieldWidget(
               controller: nameFieldController,
               maxLength: 24,
