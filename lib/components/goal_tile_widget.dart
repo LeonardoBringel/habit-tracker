@@ -22,27 +22,47 @@ class GoalTileWidget extends StatelessWidget {
     7: 'SUN',
   };
 
+  String getGoalDays(List<bool> days) {
+    List<String> result = [];
+
+    for (int i = 1; i < days.length; i++) {
+      bool day = days[i];
+      if (day) {
+        result.add(weekdays[i]!);
+      }
+    }
+
+    return result.toString().replaceAll('[', '').replaceAll(']', '');
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(width: 1),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      leading: CircleAvatar(
+        backgroundColor: Colors.transparent,
+        radius: 35,
+        child: Icon(
+          IconData(
+            goal.iconId,
+            fontFamily: 'MaterialIcons',
+          ),
+          size: 32,
+          color: isCompleted ? Colors.grey.shade800 : Colors.yellow,
+        ),
+      ),
       title: Text(
         goal.name,
-        style: isCompleted
-            ? const TextStyle(
-                fontSize: 24, decoration: TextDecoration.lineThrough)
-            : const TextStyle(fontSize: 24),
-        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: goal.name.length <= 20 ? 24 : 20,
+          decoration: isCompleted ? TextDecoration.lineThrough : null,
+        ),
       ),
       subtitle: Text(
-        goal.days.contains(false) ? weekdays[DateTime.now().weekday]! : 'Daily',
-        style: const TextStyle(fontSize: 18),
-        textAlign: TextAlign.center,
-      ),
-      leading: Icon(
-        IconData(
-          goal.iconId,
-          fontFamily: 'MaterialIcons',
-        ),
+        goal.days.contains(false) ? getGoalDays(goal.days) : 'DAILY',
       ),
     );
   }
