@@ -23,9 +23,14 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: const GoalsListWidget(weekdayFilter: true),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add, size: 32),
-        onPressed: () => Navigator.pushNamed(context, 'ManageGoal'),
+      floatingActionButton: SizedBox(
+        height: 60,
+        width: 60,
+        child: FloatingActionButton(
+          onPressed: () => Navigator.pushNamed(context, 'ManageGoal'),
+          backgroundColor: Colors.yellow,
+          child: const Icon(Icons.add, size: 40),
+        ),
       ),
     );
   }
