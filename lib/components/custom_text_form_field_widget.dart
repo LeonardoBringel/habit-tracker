@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../theme/color_theme.dart';
+
 class CustomTextFormFieldWidget extends StatelessWidget {
   const CustomTextFormFieldWidget({
     super.key,
@@ -24,10 +26,10 @@ class CustomTextFormFieldWidget extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.yellow),
+            borderSide: const BorderSide(color: ColorTheme.secondary),
             borderRadius: BorderRadius.circular(30)),
         focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.yellow),
+            borderSide: const BorderSide(color: ColorTheme.primary),
             borderRadius: BorderRadius.circular(30)),
         contentPadding: const EdgeInsets.all(25),
       ),

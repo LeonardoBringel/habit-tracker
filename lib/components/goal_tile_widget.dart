@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/goal.dart';
+import '../theme/color_theme.dart';
 
 class GoalTileWidget extends StatelessWidget {
   const GoalTileWidget({
@@ -39,7 +40,10 @@ class GoalTileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       shape: RoundedRectangleBorder(
-        side: const BorderSide(width: 1),
+        side: BorderSide(
+          width: 2,
+          color: isCompleted ? ColorTheme.faded : ColorTheme.secondary,
+        ),
         borderRadius: BorderRadius.circular(10),
       ),
       leading: CircleAvatar(
@@ -51,7 +55,7 @@ class GoalTileWidget extends StatelessWidget {
             fontFamily: 'MaterialIcons',
           ),
           size: 32,
-          color: isCompleted ? Colors.grey.shade800 : Colors.yellow,
+          color: isCompleted ? ColorTheme.faded : ColorTheme.primary,
         ),
       ),
       title: Text(

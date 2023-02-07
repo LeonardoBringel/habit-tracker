@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../theme/color_theme.dart';
+
 // ignore: must_be_immutable
 class DayButtonWidget extends StatefulWidget {
   DayButtonWidget(this.day, {super.key});
@@ -22,7 +24,9 @@ class _DayButtonWidgetState extends State<DayButtonWidget> {
       },
       style: ElevatedButton.styleFrom(
         backgroundColor:
-            widget.isSelected ? Colors.yellow.shade500 : Colors.grey.shade600,
+            widget.isSelected ? ColorTheme.primary : ColorTheme.faded,
+        foregroundColor:
+            widget.isSelected ? ColorTheme.faded : ColorTheme.primary,
       ),
       child: Text(widget.day),
     );

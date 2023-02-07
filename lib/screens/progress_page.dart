@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../models/goal.dart';
 import '../repositories/days_repository.dart';
+import '../theme/color_theme.dart';
 
 class ProgressPage extends StatelessWidget {
   const ProgressPage({super.key, required this.goal});
@@ -69,14 +70,14 @@ class ProgressPage extends StatelessWidget {
             HeatMapCalendar(
               showColorTip: false,
               colorsets: const {
-                1: Colors.yellow,
+                1: ColorTheme.primary,
               },
               datasets: dates,
               fontSize: 24,
               monthFontSize: 24,
               weekFontSize: 18,
-              defaultColor: Colors.grey,
-              textColor: Colors.black,
+              defaultColor: ColorTheme.faded,
+              textColor: ColorTheme.background,
               onClick: (date) {
                 if (date.isBefore(DateTime.now())) {
                   daysRepository.updateGoalStatus(
@@ -110,12 +111,12 @@ class ProgressPage extends StatelessWidget {
                         '$streak days',
                         style: const TextStyle(
                           fontSize: 32,
-                          color: Colors.yellow,
+                          color: ColorTheme.primary,
                         ),
                       ),
                     ],
                   ),
-                  Container(color: Colors.grey, height: 2),
+                  Container(color: ColorTheme.faded, height: 2),
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -130,13 +131,14 @@ class ProgressPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Container(color: Colors.grey, height: 2),
+                  Container(color: ColorTheme.faded, height: 2),
                 ],
               ),
             ),
           ],
         ),
       ),
+      backgroundColor: ColorTheme.background,
     );
   }
 }

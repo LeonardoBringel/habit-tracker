@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../components/goals_list_widget.dart';
+import '../theme/color_theme.dart';
 
 class MyGoalsPage extends StatelessWidget {
   const MyGoalsPage({super.key});
@@ -16,6 +17,7 @@ class MyGoalsPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: const GoalsListWidget(weekdayFilter: false),
+      backgroundColor: ColorTheme.background,
     );
   }
 }

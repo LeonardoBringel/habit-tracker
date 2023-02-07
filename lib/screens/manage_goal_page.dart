@@ -7,6 +7,7 @@ import '../components/snackbar_message.dart';
 import '../components/weekday_buttons_widget.dart';
 import '../models/goal.dart';
 import '../repositories/goals_repository.dart';
+import '../theme/color_theme.dart';
 
 class ManageGoalPage extends StatelessWidget {
   ManageGoalPage({super.key, this.goal});
@@ -65,7 +66,10 @@ class ManageGoalPage extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
           child: const Text(
             'Cancel',
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(
+              fontSize: 18,
+              color: ColorTheme.secondary,
+            ),
           ),
         ),
         actions: [
@@ -73,7 +77,10 @@ class ManageGoalPage extends StatelessWidget {
             onPressed: () => _saveGoal(context, goalsRepository),
             child: const Text(
               'Done',
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(
+                fontSize: 18,
+                color: ColorTheme.secondary,
+              ),
             ),
           ),
         ],
@@ -107,6 +114,7 @@ class ManageGoalPage extends StatelessWidget {
           FocusManager.instance.primaryFocus?.unfocus();
         },
       ),
+      backgroundColor: ColorTheme.background,
     );
   }
 }

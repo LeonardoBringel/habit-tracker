@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../components/goals_list_widget.dart';
+import '../theme/color_theme.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -28,10 +29,11 @@ class HomePage extends StatelessWidget {
         width: 60,
         child: FloatingActionButton(
           onPressed: () => Navigator.pushNamed(context, 'ManageGoal'),
-          backgroundColor: Colors.yellow,
+          backgroundColor: ColorTheme.secondary,
           child: const Icon(Icons.add, size: 40),
         ),
       ),
+      backgroundColor: ColorTheme.background,
     );
   }
 }

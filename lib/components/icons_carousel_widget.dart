@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
+import '../theme/color_theme.dart';
+
 // ignore: must_be_immutable
 class IconsCarouselWidget extends StatefulWidget {
   IconsCarouselWidget({super.key});
@@ -30,7 +32,7 @@ class _IconsCarouselWidgetState extends State<IconsCarouselWidget> {
       itemBuilder: (context, index, realIndex) => Icon(
         icons[index],
         size: 50,
-        color: Colors.yellow,
+        color: ColorTheme.primary,
       ),
       options: CarouselOptions(
         initialPage: icons.indexOf(widget.selectedIcon),

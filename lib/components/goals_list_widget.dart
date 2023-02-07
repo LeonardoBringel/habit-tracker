@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../models/goal.dart';
 import '../repositories/days_repository.dart';
 import '../repositories/goals_repository.dart';
+import '../theme/color_theme.dart';
 import 'empty_goals_message_widget.dart';
 import 'goal_tile_widget.dart';
 
@@ -78,7 +79,7 @@ class _GoalsListWidgetState extends State<GoalsListWidget> {
           SlidableAction(
             label: 'Edit',
             icon: Icons.edit,
-            backgroundColor: Colors.grey,
+            backgroundColor: ColorTheme.faded,
             onPressed: (context) {
               Navigator.pushNamed(
                 context,
@@ -95,7 +96,7 @@ class _GoalsListWidgetState extends State<GoalsListWidget> {
           SlidableAction(
             label: 'Delete',
             icon: Icons.delete,
-            backgroundColor: Colors.red.shade900,
+            backgroundColor: ColorTheme.alert,
             onPressed: (context) {
               showDialog(
                 context: context,
@@ -106,7 +107,10 @@ class _GoalsListWidgetState extends State<GoalsListWidget> {
                         const Text('Are you sure about deleting this goal?'),
                     actions: [
                       TextButton(
-                        child: const Text('Yes'),
+                        child: const Text(
+                          'Yes',
+                          style: TextStyle(color: ColorTheme.secondary),
+                        ),
                         onPressed: () {
                           daysRepository.removeGoal(goals[index].id);
                           goalsRepository.deleteGoal(goals[index]);
@@ -114,7 +118,10 @@ class _GoalsListWidgetState extends State<GoalsListWidget> {
                         },
                       ),
                       TextButton(
-                        child: const Text('No'),
+                        child: const Text(
+                          'No',
+                          style: TextStyle(color: ColorTheme.secondary),
+                        ),
                         onPressed: () {
                           Navigator.pop(context);
                         },
