@@ -13,29 +13,6 @@ class GoalTileWidget extends StatelessWidget {
   final Goal goal;
   final bool isCompleted;
 
-  static const Map<int, String> weekdays = {
-    1: 'MON',
-    2: 'TUE',
-    3: 'WED',
-    4: 'THU',
-    5: 'FRI',
-    6: 'SAT',
-    7: 'SUN',
-  };
-
-  String getGoalDays(List<bool> days) {
-    List<String> result = [];
-
-    for (int i = 1; i < days.length; i++) {
-      bool day = days[i];
-      if (day) {
-        result.add(weekdays[i]!);
-      }
-    }
-
-    return result.toString().replaceAll('[', '').replaceAll(']', '');
-  }
-
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -66,7 +43,13 @@ class GoalTileWidget extends StatelessWidget {
         ),
       ),
       subtitle: Text(
-        goal.days.contains(false) ? getGoalDays(goal.days) : 'DAILY',
+        goal.days.contains(false)
+            ? goal
+                .getWeekdays()
+                .toString()
+                .replaceAll('[', '')
+                .replaceAll(']', '')
+            : 'DAILY',
       ),
     );
   }

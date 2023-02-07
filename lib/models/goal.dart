@@ -54,4 +54,26 @@ class Goal implements DatabaseElement {
 
     return json;
   }
+
+  List<String> getWeekdays() {
+    const Map<int, String> weekdays = {
+      1: 'MON',
+      2: 'TUE',
+      3: 'WED',
+      4: 'THU',
+      5: 'FRI',
+      6: 'SAT',
+      7: 'SUN',
+    };
+
+    List<String> result = [];
+
+    for (int i = 0; i < days.length; i++) {
+      if (days[i]) {
+        result.add(weekdays[i + 1]!);
+      }
+    }
+
+    return result;
+  }
 }
