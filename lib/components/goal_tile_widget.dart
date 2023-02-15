@@ -6,6 +6,7 @@ import '../models/goal.dart';
 import '../repositories/days_repository.dart';
 import '../repositories/goals_repository.dart';
 import '../theme/color_theme.dart';
+import 'snackbar_message.dart';
 
 class GoalTileWidget extends StatefulWidget {
   const GoalTileWidget({
@@ -154,6 +155,8 @@ class _GoalTileWidgetState extends State<GoalTileWidget> {
               onPressed: () {
                 daysRepository.removeGoal(widget.goal.id);
                 goalsRepository.deleteGoal(widget.goal);
+
+                snackbarMessage(context, 'Goal deleted!');
                 Navigator.pop(context);
               },
             ),
