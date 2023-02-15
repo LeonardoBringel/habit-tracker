@@ -51,79 +51,19 @@ class _GoalTileWidgetState extends State<GoalTileWidget> {
           ),
           child: Slidable(
             enabled: widget.isSlidable,
-            startActionPane: ActionPane(
-              motion: const ScrollMotion(),
-              extentRatio: 0.3,
-              children: [
-                SlidableAction(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                  ),
-                  label: 'Edit',
-                  icon: Icons.edit,
-                  backgroundColor: ColorTheme.faded,
-                  onPressed: (context) {
-                    Navigator.pushNamed(
-                      context,
-                      'ManageGoal',
-                      arguments: widget.goal,
-                    );
-                  },
-                ),
-              ],
+            startActionPane: _createActionPane(
+              'Edit',
+              Icons.edit,
+              ColorTheme.faded,
+              _onEdit,
+              isLeftBorderCircular: true,
             ),
-            endActionPane: ActionPane(
-              motion: const ScrollMotion(),
-              extentRatio: 0.3,
-              children: [
-                SlidableAction(
-                  borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
-                  ),
-                  label: 'Delete',
-                  icon: Icons.delete,
-                  backgroundColor: ColorTheme.alert,
-                  onPressed: (context) {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: const Text('Caution'),
-                          content: const Text(
-                              'Are you sure about deleting this goal?'),
-                          actions: [
-                            TextButton(
-                              child: const Text(
-                                'Yes',
-                                style: TextStyle(color: ColorTheme.secondary),
-                              ),
-                              onPressed: () {
-                                daysRepository.removeGoal(widget.goal.id);
-                                goalsRepository.deleteGoal(widget.goal);
-                                Navigator.pop(context);
-                              },
-                            ),
-                            TextButton(
-                              child: const Text(
-                                'No',
-                                style: TextStyle(color: ColorTheme.secondary),
-                              ),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ],
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
-              ],
+            endActionPane: _createActionPane(
+              'Delete',
+              Icons.delete,
+              ColorTheme.alert,
+              _onDelete,
+              isRightBorderCircular: true,
             ),
             child: ListTile(
               leading: SizedBox(
@@ -173,6 +113,77 @@ class _GoalTileWidgetState extends State<GoalTileWidget> {
             widget.goal.id,
           );
         }
+      },
+    );
+  }
+
+  ActionPane _createActionPane(
+    String label,
+    IconData icon,
+    Color color,
+    Function(BuildContext) onPressed, {
+    bool isLeftBorderCircular = false,
+    bool isRightBorderCircular = false,
+  }) {
+    return ActionPane(
+      motion: const ScrollMotion(),
+      extentRatio: 0.3,
+      children: [
+        SlidableAction(
+          borderRadius: BorderRadius.horizontal(
+            left: Radius.circular(isLeftBorderCircular ? 10 : 0),
+            right: Radius.circular(isRightBorderCircular ? 10 : 0),
+          ),
+          label: label,
+          icon: icon,
+          backgroundColor: color,
+          onPressed: onPressed,
+        ),
+      ],
+    );
+  }
+
+  void _onEdit(BuildContext context) {
+    Navigator.pushNamed(
+      context,
+      'ManageGoal',
+      arguments: widget.goal,
+    );
+  }
+
+  void _onDelete(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Caution'),
+          content: const Text('Are you sure about deleting this goal?'),
+          actions: [
+            TextButton(
+              child: const Text(
+                'Yes',
+                style: TextStyle(color: ColorTheme.secondary),
+              ),
+              onPressed: () {
+                daysRepository.removeGoal(widget.goal.id);
+                goalsRepository.deleteGoal(widget.goal);
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              child: const Text(
+                'No',
+                style: TextStyle(color: ColorTheme.secondary),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        );
       },
     );
   }
