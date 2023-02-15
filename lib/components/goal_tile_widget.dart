@@ -39,6 +39,7 @@ class _GoalTileWidgetState extends State<GoalTileWidget> {
     }
 
     return InkWell(
+      onTap: _onTap,
       child: ClipRRect(
         clipBehavior: Clip.hardEdge,
         child: Container(
@@ -100,20 +101,6 @@ class _GoalTileWidgetState extends State<GoalTileWidget> {
           ),
         ),
       ),
-      onTap: () {
-        if (widget.isSlidable) {
-          Navigator.pushNamed(
-            context,
-            'Progress',
-            arguments: widget.goal,
-          );
-        } else {
-          daysRepository.updateGoalStatus(
-            DateTime.now(),
-            widget.goal.id,
-          );
-        }
-      },
     );
   }
 
@@ -186,5 +173,20 @@ class _GoalTileWidgetState extends State<GoalTileWidget> {
         );
       },
     );
+  }
+
+  void _onTap() {
+    if (widget.isSlidable) {
+      Navigator.pushNamed(
+        context,
+        'Progress',
+        arguments: widget.goal,
+      );
+    } else {
+      daysRepository.updateGoalStatus(
+        DateTime.now(),
+        widget.goal.id,
+      );
+    }
   }
 }
