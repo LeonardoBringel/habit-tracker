@@ -22,9 +22,9 @@ class ManageGoalPage extends StatelessWidget {
 
   void _saveGoal(BuildContext context, var goalsRepository) {
     if (nameFieldController.text.isEmpty) {
-      snackbarMessage(context, 'Every goal must have a name!');
+      createSnackbarMessage(context, 'Every goal must have a name!');
     } else if (!weekdayButtonsWidget.anySelected()) {
-      snackbarMessage(context, 'At least one day must be selected.');
+      createSnackbarMessage(context, 'At least one day must be selected.');
     } else {
       goalsRepository.saveGoal(
         Goal(
@@ -36,7 +36,7 @@ class ManageGoalPage extends StatelessWidget {
         ),
       );
       Navigator.pop(context);
-      snackbarMessage(context, 'Goal saved!');
+      createSnackbarMessage(context, 'Goal saved!');
     }
   }
 

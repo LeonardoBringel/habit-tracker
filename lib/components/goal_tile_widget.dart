@@ -156,7 +156,7 @@ class _GoalTileWidgetState extends State<GoalTileWidget> {
                 daysRepository.removeGoal(widget.goal.id);
                 goalsRepository.deleteGoal(widget.goal);
 
-                snackbarMessage(context, 'Goal deleted!');
+                createSnackbarMessage(context, 'Goal deleted!');
                 Navigator.pop(context);
               },
             ),

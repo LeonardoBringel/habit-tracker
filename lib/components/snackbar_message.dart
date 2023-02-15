@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:habit_tracker/theme/color_theme.dart';
 
-void snackbarMessage(BuildContext context, String message) {
+import '../theme/color_theme.dart';
+
+void createSnackbarMessage(BuildContext context, String message) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(
