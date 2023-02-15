@@ -53,8 +53,13 @@ class _GoalTileWidgetState extends State<GoalTileWidget> {
             enabled: widget.isSlidable,
             startActionPane: ActionPane(
               motion: const ScrollMotion(),
+              extentRatio: 0.3,
               children: [
                 SlidableAction(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  ),
                   label: 'Edit',
                   icon: Icons.edit,
                   backgroundColor: ColorTheme.faded,
@@ -70,8 +75,13 @@ class _GoalTileWidgetState extends State<GoalTileWidget> {
             ),
             endActionPane: ActionPane(
               motion: const ScrollMotion(),
+              extentRatio: 0.3,
               children: [
                 SlidableAction(
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  ),
                   label: 'Delete',
                   icon: Icons.delete,
                   backgroundColor: ColorTheme.alert,
