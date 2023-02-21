@@ -22,35 +22,23 @@ class ProgressPage extends StatelessWidget {
 
     int streak = 0;
     int bestStreak = 0;
-    List<int> streaks = [];
 
     if (days.isNotEmpty) {
-      DateTime lastDay;
-      lastDay = days.first.date;
-      for (var day in days) {
-        int difference = day.date.difference(lastDay).inDays;
-        if (difference == -1 || difference == 0) {
+      List<DateTime> allDates = _getAllDates(days.last.date, days.first.date);
+
+      for (var date in allDates) {
+        if (days.indexWhere((element) => element.date == date) != -1) {
           streak += 1;
+          dates.addAll({date: 1});
         } else {
-          streaks.add(streak);
-          streak = 1;
+          if (streak > bestStreak) {
+            bestStreak = streak;
+          }
+          streak = 0;
         }
-        lastDay = day.date;
-        dates.addAll({day.date: 1});
       }
-      streaks.add(streak);
-
-      DateTime today = DateUtils.dateOnly(DateTime.now());
-      if (days.first.date.compareTo(today) == 0) {
-        streak = streaks.first;
-      } else {
-        streak = 0;
-      }
-    }
-
-    for (int i in streaks) {
-      if (bestStreak < i) {
-        bestStreak = i;
+      if (streak > bestStreak) {
+        bestStreak = streak;
       }
     }
 
@@ -79,7 +67,8 @@ class ProgressPage extends StatelessWidget {
               defaultColor: ColorTheme.faded,
               textColor: ColorTheme.background,
               onClick: (date) {
-                if (date.isBefore(DateTime.now())) {
+                if (goal.days[date.weekday - 1] &&
+                    date.isBefore(DateTime.now())) {
                   daysRepository.updateGoalStatus(
                     date,
                     goal.id,
@@ -140,5 +129,20 @@ class ProgressPage extends StatelessWidget {
       ),
       backgroundColor: ColorTheme.background,
     );
+  }
+
+  List<DateTime> _getAllDates(DateTime firstDate, DateTime lastDate) {
+    List<DateTime> allDates = [];
+
+    DateTime today = DateUtils.dateOnly(DateTime.now());
+    DateTime date = firstDate;
+
+    while (date.compareTo(today) <= 0) {
+      if (goal.days[date.weekday - 1]) {
+        allDates.add(date);
+      }
+      date = date.add(const Duration(days: 1));
+    }
+    return allDates;
   }
 }
