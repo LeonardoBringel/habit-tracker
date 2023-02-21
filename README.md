@@ -33,6 +33,7 @@ A habit tracker app, built with Flutter and SQLite.
 
 * [Sqflite](https://pub.dev/packages/sqflite): Plugin for SQLite
 * [Path Provider](https://pub.dev/packages/path_provider): Plugin to get systems directories
+* [Provider](https://pub.dev/packages/provider): A wrapper around [InheritedWidget](https://api.flutter.dev/flutter/widgets/InheritedWidget-class.html)
 * [Flutter Slidable](https://pub.dev/packages/flutter_slidable): Implementation of a slidable menu
 * [Flutter Heatmap Calendar](https://pub.dev/packages/flutter_heatmap_calendar): Implementation of a heatmap calendar
 * [Carousel Slider](https://pub.dev/packages/carousel_slider): Implementation of a carousel slider
