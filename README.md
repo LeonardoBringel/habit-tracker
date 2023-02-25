@@ -53,3 +53,12 @@ Clone this repository and run pubspec.yaml to install the dependencies.
 git clone https://github.com/LeonardoBringel/HabitTracker .
 flutter create .
 ```
+
+
+## 📄 License
+
+This project is MIT licensed, as found in the [LICENSE](./LICENSE) file.
+
+### 👽 Third-Party Content 
+
+The [spooky_ghost](./assets//images//spooky_ghost.png) image is provided by [Alpár-Etele Méder](https://www.iconfinder.com/pocike/icon-sets).
